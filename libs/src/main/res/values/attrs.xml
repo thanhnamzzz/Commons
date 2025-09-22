@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StrokeTextView">
+        <attr name="strokeTextColor" format="color" />
+        <attr name="strokeBorderColor" format="color" />
+        <attr name="strokeBorderWidth" format="float" />
+        <attr name="strokeBorderJoin" format="enum">
+            <enum name="MITER" value="0" />
+            <enum name="ROUND" value="1" />
+            <enum name="BEVEL" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="GradientBackgroundButton">
+        <attr name="button_color1" format="color" />
+        <attr name="button_color2" format="color" />
+        <attr name="button_color3" format="color" />
+        <attr name="button_color4" format="color" />
+        <attr name="button_color5" format="color" />
+        <attr name="orientationColor" format="enum">
+            <enum name="TOP_BOTTOM" value="0" />
+            <enum name="TR_BL" value="1" />
+            <enum name="RIGHT_LEFT" value="2" />
+            <enum name="BR_TL" value="3" />
+            <enum name="BOTTOM_TOP" value="4" />
+            <enum name="BL_TR" value="5" />
+            <enum name="LEFT_RIGHT" value="6" />
+            <enum name="TL_BR" value="7" />
+        </attr>
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="rippleColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="GradientTextView">
+        <attr name="text_color1" format="color" />
+        <attr name="text_color2" format="color" />
+        <attr name="text_color3" format="color" />
+        <attr name="text_color4" format="color" />
+        <attr name="text_color5" format="color" />
+        <attr name="orientationColorTextView" format="enum">
+            <enum name="HORIZONTAL" value="0" />
+            <enum name="VERTICAL" value="1" />
+            <enum name="DIAGONAL" value="2" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ProgressWheel">
+        <attr name="pw_progressIndeterminate" format="boolean" />
+        <attr name="pw_barColor" format="color" />
+        <attr name="pw_rimColor" format="color" />
+        <attr name="pw_rimWidth" format="dimension" />
+        <attr name="pw_spinSpeed" format="float" />
+        <attr name="pw_barSpinCycleTime" format="integer" />
+        <attr name="pw_circleRadius" format="dimension" />
+        <attr name="pw_fillRadius" format="boolean" />
+        <attr name="pw_barWidth" format="dimension" />
+        <attr name="pw_linearProgress" format="boolean" />
+        <attr name="pw_borderProgress" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="flFlow" format="boolean" />
+        <attr name="flChildSpacing" format="enum|dimension">
+            <enum name="auto" value="-65536" />
+        </attr>
+        <attr name="flMinChildSpacing" format="dimension" />
+        <attr name="flChildSpacingForLastRow" format="enum|dimension">
+            <enum name="auto" value="-65536" />
+            <enum name="align" value="-65537" />
+        </attr>
+        <attr name="flRowSpacing" format="enum|dimension">
+            <enum name="auto" value="-65536" />
+        </attr>
+        <attr name="flRtl" format="boolean" />
+        <attr name="flMaxRows" format="integer" />
+        <attr name="flRowVerticalGravity" format="enum">
+            <enum name="auto" value="-65536" />
+            <enum name="top" value="0x30" />
+            <enum name="center" value="0x10" />
+            <enum name="bottom" value="0x50" />
+        </attr>
+        <attr name="android:gravity" />
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerView">
+        <attr name="reflectionColor" format="color" />
+    </declare-styleable>
+</resources>

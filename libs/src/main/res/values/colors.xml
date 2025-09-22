@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="none">#00FFFFFF</color>
+    <color name="ripple_button">#33888888</color>
+    <color name="constant_background_button">#5D5D5D</color>
+</resources>
