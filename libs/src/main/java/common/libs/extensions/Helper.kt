@@ -5,6 +5,7 @@ import android.content.Context
 import android.media.MediaScannerConnection
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.IntRange
 import common.libs.views.MyToast
 
 fun reloadGallerySystem(context: Context, filePath: String) {
@@ -13,7 +14,7 @@ fun reloadGallerySystem(context: Context, filePath: String) {
 	) { _, _ -> }
 }
 
-fun toastMess(activity: Activity, mess: String, duration: Int, typeToast: MyToast.TypeToast) {
+fun toastMess(activity: Activity, mess: String, @IntRange(from = 0, to = 1) duration: Int, typeToast: MyToast.TypeToast) {
 	when (typeToast) {
 		MyToast.TypeToast.TOAST_SUCCESS -> MyToast.showToastSuccess(activity, mess, duration)
 		MyToast.TypeToast.TOAST_ERROR -> MyToast.showToastError(activity, mess, duration)
