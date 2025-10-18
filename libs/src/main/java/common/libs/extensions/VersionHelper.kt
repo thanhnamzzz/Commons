@@ -3,11 +3,11 @@ package common.libs.extensions
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 
-/** Android 16 */
-@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.BAKLAVA)
-fun isBaklava36Plus(): Boolean {
-	return Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
-}
+///** Android 16 */
+//@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.BAKLAVA)
+//fun isBaklava36Plus(): Boolean {
+//	return Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
+//}
 
 /** Android 15 */
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
