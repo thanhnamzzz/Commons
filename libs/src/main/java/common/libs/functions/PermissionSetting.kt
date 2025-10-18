@@ -3,8 +3,10 @@ package common.libs.functions
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import common.libs.extensions.isO26Plus
 import common.libs.extensions.isR30Plus
@@ -60,4 +62,10 @@ fun openAppSettingsLocation(resultLauncher: ActivityResultLauncher<Intent>) {
 fun openAppSettingsWifi(resultLauncher: ActivityResultLauncher<Intent>) {
 	val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
 	resultLauncher.launch(intent)
+}
+
+@RequiresApi(Build.VERSION_CODES.Q)
+fun Context.openPanelNetwork() {
+	val intent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
+	startActivity(intent)
 }
