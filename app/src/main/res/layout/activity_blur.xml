@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".blurView.BlurActivity">
+
+    <common.libs.blurView.BlurTarget
+        android:id="@+id/blur_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#8FFFD6"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </common.libs.blurView.BlurTarget>
+
+    <common.libs.blurView.BlurView
+        android:id="@+id/blur_view_v3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:background="@drawable/rounded"
+        android:elevation="10dp"
+        app:blurOverlayColor="#27FFFFFF">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/virgo" />
+
+    </common.libs.blurView.BlurView>
+
+    <common.libs.blurView.BlurView
+        android:id="@+id/blur_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_50sdp"
+        app:blurOverlayColor="#27FFFFFF" />
+
+    <SeekBar
+        android:id="@+id/seekbar_blur"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:max="30" />
+
+</RelativeLayout>

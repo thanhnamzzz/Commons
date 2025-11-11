@@ -1,11 +1,13 @@
 package common.commons
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import common.commons.blurView.BlurActivity
 import common.commons.databinding.ActivityMainBinding
 import common.libs.SimpleActivity
 import common.libs.extensions.PatternDate
@@ -40,6 +42,10 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
         binding.btnCheckNetwork.setOnClickListener {
             if (isQ29Plus()) openPanelNetwork()
             else openAppSettingsWifi(launcherNetwork)
+        }
+
+        binding.btnBlurView.setOnClickListener {
+            startActivity(Intent(this, BlurActivity::class.java))
         }
     }
 
