@@ -18,6 +18,7 @@ import common.libs.extensions.toastMess
 import common.libs.functions.openAppSettingsWifi
 import common.libs.functions.openPanelNetwork
 import common.libs.functions.versionApp
+import common.libs.navigationBar.IslandNavigationBarView
 import common.libs.views.TypeToast
 
 class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -46,6 +47,22 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 
         binding.btnBlurView.setOnClickListener {
             startActivity(Intent(this, BlurActivity::class.java))
+        }
+
+        binding.bottomBar.apply {
+            setOnTabActionListener(object : IslandNavigationBarView.OnTabActionListener{
+                override fun onTabSelected(tabId: Int) {
+
+                }
+
+                override fun onTabReselected(tabId: Int) {
+
+                }
+
+                override fun onTabUnselected(tabId: Int) {
+
+                }
+            })
         }
     }
 

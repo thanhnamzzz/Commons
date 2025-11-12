@@ -8,4 +8,9 @@
   <dimen name="bottom_text_size">12sp</dimen>
   <dimen name="inner_components_spacing">8dp</dimen>
   <dimen name="bottom_ellipsis_height">4dp</dimen>
+
+
+  <dimen name="default_tab_internal_padding">12dp</dimen>
+  <integer name="default_tab_toggle_animation_duration">250</integer>
+  <integer name="default_bar_toggle_animation_duration">250</integer>
 </resources>

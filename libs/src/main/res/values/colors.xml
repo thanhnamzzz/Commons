@@ -4,4 +4,8 @@
     <color name="none">#00FFFFFF</color>
     <color name="ripple_button">#33888888</color>
     <color name="constant_background_button">#5D5D5D</color>
+
+
+    <color name="default_tab_inactive_color">@android:color/transparent</color>
+    <color name="default_tab_active_color">#FFCCCCCC</color>
 </resources>

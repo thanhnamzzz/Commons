@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -7,16 +8,67 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_check_network"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Check network" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_blur_view"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_check_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check network" />
+
+        <Button
+            android:id="@+id/btn_blur_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blur view" />
+
+    </LinearLayout>
+
+    <common.libs.navigationBar.IslandNavigationBarView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Blur view" />
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:background="@color/white"
+        app:barDistribution="spread"
+        app:barHiddenTitleTab="true"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-</LinearLayout>
+        <common.libs.navigationBar.IslandNavigationTabView
+            android:id="@+id/tab_storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/bg_tab_bottom"
+            app:tabIcon="@drawable/icon_storage"
+            app:tabTitle="Storage"
+            app:tabTitleActiveColor="@color/white"
+            app:tabTitleFont="@font/montserrat_alternates_bold"
+            app:tabTitleInactiveColor="#A7A8AF" />
+
+        <common.libs.navigationBar.IslandNavigationTabView
+            android:id="@+id/tab_explore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/bg_tab_bottom"
+            app:tabIcon="@drawable/icon_explore"
+            app:tabTitle="Explore"
+            app:tabTitleActiveColor="@color/white"
+            app:tabTitleInactiveColor="#A7A8AF" />
+
+        <common.libs.navigationBar.IslandNavigationTabView
+            android:id="@+id/tab_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/bg_tab_bottom"
+            app:tabIcon="@drawable/icon_setting"
+            app:tabTitle="Setting"
+            app:tabTitleActiveColor="@color/white"
+            app:tabTitleInactiveColor="#A7A8AF" />
+
+    </common.libs.navigationBar.IslandNavigationBarView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

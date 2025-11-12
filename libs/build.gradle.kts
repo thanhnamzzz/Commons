@@ -46,6 +46,7 @@ dependencies {
 	implementation(libs.sdp.android)
 	//Glide
 	implementation(libs.glide)
+	implementation(libs.androidx.constraintlayout)
 }
 
 publishing.publications {
