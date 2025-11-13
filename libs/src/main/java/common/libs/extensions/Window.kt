@@ -48,7 +48,7 @@ fun Window.updateNavigationBarColors(backgroundColor: Int) {
     updateNavigationBarForegroundColor(backgroundColor)
 }
 
-fun Window.updateNavigationBarForegroundColor(backgroundColor: Int) {
+fun Window.updateNavigationBarForegroundColor(backgroundColor: Int, showBackgroundNavigationBar: Boolean = true) {
     if (isR30Plus()) {
         if (backgroundColor.getContrastColor() == DARK_GREY) {
             insetsController?.apply {
@@ -74,6 +74,9 @@ fun Window.updateNavigationBarForegroundColor(backgroundColor: Int) {
                 decorView.systemUiVisibility.removeBit(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR)
         }
     }
+
+    if (isQ29Plus())
+        isNavigationBarContrastEnforced = showBackgroundNavigationBar
 }
 
 fun Window.keepScreenOn() {
