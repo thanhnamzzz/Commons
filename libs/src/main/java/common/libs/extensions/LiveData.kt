@@ -38,6 +38,46 @@ fun <T> MutableLiveData<List<T>>.updateItems(predicate: (T) -> Boolean, newItems
 	value = mutable.toList()
 }
 
+// Lấy item đầu tiên thỏa điều kiện
+fun <T> MutableLiveData<List<T>>.firstItem(predicate: (T) -> Boolean): T? {
+	return value?.firstOrNull(predicate)
+}
+
+// Lấy item cuối cùng thỏa điều kiện
+fun <T> MutableLiveData<List<T>>.lastItem(predicate: (T) -> Boolean): T? {
+	return value?.lastOrNull(predicate)
+}
+
+// Tìm index đầu tiên thỏa điều kiện
+fun <T> MutableLiveData<List<T>>.indexOfFirstItem(predicate: (T) -> Boolean): Int {
+	return value?.indexOfFirst(predicate) ?: -1
+}
+
+// Lọc ra list mới thỏa điều kiện
+fun <T> MutableLiveData<List<T>>.filterList(predicate: (T) -> Boolean): List<T> {
+	return value?.filter(predicate) ?: emptyList()
+}
+
+// Lọc ra list mới, map sang kiểu khác
+fun <T, R> MutableLiveData<List<T>>.mapList(transform: (T) -> R): List<R> {
+	return value?.map(transform) ?: emptyList()
+}
+
+// Kiểm tra tồn tại item thỏa điều kiện
+fun <T> MutableLiveData<List<T>>.anyItem(predicate: (T) -> Boolean): Boolean {
+	return value?.any(predicate) == true
+}
+
+// Kiểm tra tất cả item thỏa điều kiện
+fun <T> MutableLiveData<List<T>>.allItems(predicate: (T) -> Boolean): Boolean {
+	return value?.all(predicate) == true
+}
+
+// Lấy danh sách copy ra MutableList
+fun <T> MutableLiveData<List<T>>.toMutableList(): MutableList<T> {
+	return value?.toMutableList() ?: mutableListOf()
+}
+
 /** Extensions cho MutableLiveData<MutableList> (mutable list) **/
 // Thêm 1 item
 fun <T> MutableLiveData<MutableList<T>>.addItemMutable(item: T) {
@@ -85,6 +125,46 @@ fun <T> MutableLiveData<MutableList<T>>.updateItemsMutable(predicate: (T) -> Boo
 	value = list
 }
 
+// Lấy item đầu tiên
+fun <T> MutableLiveData<MutableList<T>>.firstItemMutable(predicate: (T) -> Boolean): T? {
+	return value?.firstOrNull(predicate)
+}
+
+// Lấy item cuối cùng
+fun <T> MutableLiveData<MutableList<T>>.lastItemMutable(predicate: (T) -> Boolean): T? {
+	return value?.lastOrNull(predicate)
+}
+
+// Tìm index
+fun <T> MutableLiveData<MutableList<T>>.indexOfFirstItemMutable(predicate: (T) -> Boolean): Int {
+	return value?.indexOfFirst(predicate) ?: -1
+}
+
+// Lọc ra list mới (không thay đổi LiveData)
+fun <T> MutableLiveData<MutableList<T>>.filterListMutable(predicate: (T) -> Boolean): List<T> {
+	return value?.filter(predicate) ?: emptyList()
+}
+
+// Map sang kiểu khác
+fun <T, R> MutableLiveData<MutableList<T>>.mapListMutable(transform: (T) -> R): List<R> {
+	return value?.map(transform) ?: emptyList()
+}
+
+// Kiểm tra tồn tại item
+fun <T> MutableLiveData<MutableList<T>>.anyItemMutable(predicate: (T) -> Boolean): Boolean {
+	return value?.any(predicate) == true
+}
+
+// Kiểm tra tất cả item
+fun <T> MutableLiveData<MutableList<T>>.allItemsMutable(predicate: (T) -> Boolean): Boolean {
+	return value?.all(predicate) == true
+}
+
+// Copy ra MutableList
+fun <T> MutableLiveData<MutableList<T>>.toMutableListCopy(): MutableList<T> {
+	return value?.toMutableList() ?: mutableListOf()
+}
+
 /** Ví dụ **/
 //data class User(val id: Int, val name: String)
 //
@@ -101,3 +181,22 @@ fun <T> MutableLiveData<MutableList<T>>.updateItemsMutable(predicate: (T) -> Boo
 //
 //// Update user theo id
 //usersLiveData.updateItem({ it.id == 2 }, User(2, "Linh Updated"))
+
+
+//val usersLiveData = MutableLiveData<List<User>>(listOf(
+//	User(1, "Nam"),
+//	User(2, "Linh"),
+//	User(3, "An")
+//))
+//
+//// Tìm user theo id
+//val user2 = usersLiveData.firstItem { it.id == 2 }
+//
+//// Lọc ra những user có tên dài hơn 2 ký tự
+//val longNames = usersLiveData.filterList { it.name.length > 2 }
+//
+//// Map sang tên user
+//val names = usersLiveData.mapList { it.name }
+//
+//// Kiểm tra có user nào tên "Nam" không
+//val hasNam = usersLiveData.anyItem { it.name == "Nam" }
