@@ -44,8 +44,8 @@ dependencies {
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.sdp.android)
-	//Glide
-	implementation(libs.glide)
+//	Glide
+//	implementation(libs.glide)
 	implementation(libs.androidx.constraintlayout)
 }
 
