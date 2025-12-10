@@ -22,61 +22,70 @@ import common.libs.navigationBar.IslandNavigationBarView
 import common.libs.views.TypeToast
 
 class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        window.hideSystemNavigationBar()
-        val m1 = "yyyy-MM-dd HH:mm:ss".formatDate(2024, 9, 27)
-        val m2 = PatternDate.EEEE_dd_MM_yyyy.formatDate(2025, 10, 1)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
+		setContentView(binding.root)
+		ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+			val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+			v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+			insets
+		}
+		window.hideSystemNavigationBar()
+		val m1 = "yyyy-MM-dd HH:mm:ss".formatDate(2024, 9, 27)
+		val m2 = PatternDate.EEEE_dd_MM_yyyy.formatDate(2025, 10, 1)
 
-        toastMess( getString(R.string.app_name), TypeToast.TOAST_SUCCESS)
-        Log.d("Namzzz", "MainActivity: onCreate m1 = $m1")
-        Log.d("Namzzz", "MainActivity: onCreate m2 = $m2")
-        Log.d("Namzzz", "MainActivity: onCreate version App = ${versionApp()}")
+		toastMess(getString(R.string.app_name), TypeToast.TOAST_SUCCESS)
+		Log.d("Namzzz", "MainActivity: onCreate m1 = $m1")
+		Log.d("Namzzz", "MainActivity: onCreate m2 = $m2")
+		Log.d("Namzzz", "MainActivity: onCreate version App = ${versionApp()}")
 
-        binding.btnCheckNetwork.setOnClickListener {
-            if (isQ29Plus()) openPanelNetwork()
-            else openAppSettingsWifi(launcherNetwork)
-        }
+		binding.btnCheckNetwork.setOnClickListener {
+			if (isQ29Plus()) openPanelNetwork()
+			else openAppSettingsWifi(launcherNetwork)
+		}
 
-        binding.btnBlurView.setOnClickListener {
-            startActivity(Intent(this, BlurActivity::class.java))
-        }
+		binding.btnBlurView.setOnClickListener {
+			startActivity(Intent(this, BlurActivity::class.java))
+		}
 
-        binding.bottomBar.apply {
-            setOnTabActionListener(object : IslandNavigationBarView.OnTabActionListener{
-                override fun onTabSelected(tabId: Int) {
+		binding.bottomBar.apply {
+			setOnTabActionListener(object : IslandNavigationBarView.OnTabActionListener {
+				override fun onTabSelected(tabId: Int) {
 
-                }
+				}
 
-                override fun onTabReselected(tabId: Int) {
+				override fun onTabReselected(tabId: Int) {
 
-                }
+				}
 
-                override fun onTabUnselected(tabId: Int) {
+				override fun onTabUnselected(tabId: Int) {
 
-                }
-            })
-        }
-    }
+				}
+			})
+		}
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("Namzzz", "MainActivity: onPause")
-    }
+		binding.btnIntentCompose.setOnClickListener {
+			startActivity(Intent(this, ComposeActivity::class.java))
+		}
 
-    override fun onResume() {
-        super.onResume()
-        Log.d("Namzzz", "MainActivity: onResume")
-    }
+		binding.btnIntentToast.setOnClickListener {
+			startActivity(Intent(this, ToastActivity::class.java))
+		}
+	}
 
-    private val launcherNetwork = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        Log.d("Namzzz", "MainActivity: in launcherNetwork")
-    }
+	override fun onPause() {
+		super.onPause()
+		Log.d("Namzzz", "MainActivity: onPause")
+	}
+
+	override fun onResume() {
+		super.onResume()
+		Log.d("Namzzz", "MainActivity: onResume")
+	}
+
+	private val launcherNetwork =
+		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+			Log.d("Namzzz", "MainActivity: in launcherNetwork")
+		}
 }
