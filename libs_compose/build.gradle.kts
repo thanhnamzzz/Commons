@@ -55,7 +55,7 @@ dependencies {
 }
 
 publishing.publications {
-	create<MavenPublication>("compose_release") {
+	create<MavenPublication>("release") {
 		afterEvaluate {
 			from(components["release"])
 		}
