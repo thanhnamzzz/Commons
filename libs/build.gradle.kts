@@ -35,6 +35,9 @@ android {
 			jvmTarget.set(JvmTarget.JVM_17)
 		}
 	}
+	publishing {
+		singleVariant("release")
+	}
 
 	buildFeatures { viewBinding = true }
 }

@@ -207,10 +207,10 @@ fun MainScreen(
 		blendMode = BlendMode.Overlay,
 		rotation = 45f,
 		shaderColors = listOf(
-			Color.White.copy(alpha = 0.3f),
+			Color.White.copy(alpha = 1f),
 			Color.DarkGray.copy(alpha = 1f),
 //			Color(255, 68, 68).copy(alpha = 1f),
-			Color.White.copy(alpha = 0.3f),
+			Color.White.copy(alpha = 1f),
 		),
 		shaderColorStops = null,
 		shimmerWidth = 400.dp,
