@@ -64,14 +64,6 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 				}
 			})
 		}
-
-		binding.btnIntentCompose.setOnClickListener {
-			startActivity(Intent(this, ComposeActivity::class.java))
-		}
-
-		binding.btnIntentToast.setOnClickListener {
-			startActivity(Intent(this, ToastActivity::class.java))
-		}
 	}
 
 	override fun onPause() {

@@ -22,4 +22,3 @@ dependencyResolutionManagement {
 rootProject.name = "Commons"
 include(":app")
 include(":libs")
-include(":libs_compose")
