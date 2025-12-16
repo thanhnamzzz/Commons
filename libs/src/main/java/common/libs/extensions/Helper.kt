@@ -6,11 +6,16 @@ import android.media.MediaScannerConnection
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.IntRange
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import common.libs.views.TypeToast
 import common.libs.views.showToastError
 import common.libs.views.showToastNone
 import common.libs.views.showToastSuccess
 import common.libs.views.showToastWarning
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 fun reloadGallerySystem(context: Context, filePath: String) {
     MediaScannerConnection.scanFile(
@@ -31,6 +36,23 @@ fun Activity.toastMess(
     }
 }
 
+@Deprecated(
+    message = "Unsafe: this function does not respect lifecycle. " +
+            "Use handlerFunction(timeWait, LifecycleOwner, callback) instead.",
+    level = DeprecationLevel.WARNING
+)
 fun handlerFunction(timeWait: Long, callback: () -> Unit) {
     Handler(Looper.getMainLooper()).postDelayed({ callback() }, timeWait)
+}
+
+fun LifecycleOwner.handlerFunction(
+    timeWait: Long,
+    callback: () -> Unit
+) {
+    lifecycleScope.launch {
+        delay(timeWait)
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            callback()
+        }
+    }
 }
