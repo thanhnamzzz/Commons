@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.util.AttributeSet
+import androidx.annotation.Size
 import androidx.appcompat.widget.AppCompatTextView
 import common.libs.R
 import androidx.core.content.withStyledAttributes
@@ -48,14 +49,14 @@ class GradientTextView @JvmOverloads constructor(
 	}
 
 	/**For color list under IntArray*/
-	fun setGradientColors(colors: IntArray) {
+	fun setGradientColors(@Size(min = 2) colors: IntArray) {
 		this.colors = colors
 		invalidateGradient()
 		invalidate()
 	}
 
 	/**For color list under code #RRGGBB*/
-	fun setGradientColors(colorStrings: Array<String>) {
+	fun setGradientColors(@Size(min = 2) colorStrings: List<String>) {
 		this.colors = colorStrings.map { it.toColorInt() }.toIntArray()
 		invalidateGradient()
 		invalidate()
