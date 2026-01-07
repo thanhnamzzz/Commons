@@ -35,6 +35,7 @@ class GradientTextView @JvmOverloads constructor(
 				color5 = getColor(R.styleable.GradientTextView_text_color5, 0)
 				val ar = intArrayOf(color1, color2, color3, color4, color5)
 				colors = ar.filter { a -> a != 0 }.toIntArray()
+				if (colors.isEmpty()) colors = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
 				val i = getInt(R.styleable.GradientTextView_orientationColorTextView, 0)
 				orientation = when (i) {
 					1 -> ColorOrientation.VERTICAL
