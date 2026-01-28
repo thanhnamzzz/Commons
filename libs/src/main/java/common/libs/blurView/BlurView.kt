@@ -1,5 +1,5 @@
 /* Clone from https://github.com/Dimezis/BlurView
-* from commit fd1c9de 25-07-2025 */
+* from commit c5b23e6 14-11-2025 */
 
 package common.libs.blurView
 

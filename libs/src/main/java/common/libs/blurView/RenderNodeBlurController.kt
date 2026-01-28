@@ -17,6 +17,8 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
 import androidx.core.graphics.withScale
 import common.libs.blurView.Noise.apply
+import common.libs.extensions.isS31Plus
+import androidx.core.graphics.withClip
 
 @RequiresApi(api = Build.VERSION_CODES.S)
 class RenderNodeBlurController(
@@ -65,20 +67,20 @@ class RenderNodeBlurController(
 	// https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/libs/hwui/jni/RenderEffect.cpp;l=39;drc=61197364367c9e404c7da6900658f1b16c42d0da?q=nativeCreateBlurEffect&ss=android%2Fplatform%2Fsuperproject%2Fmain
 	private fun hardwarePath(canvas: Canvas) {
 
-		// TODO would be good to keep it the size of the BlurView instead of the target, but then the animation
-		//  like translation and rotation would go out of bounds. Not sure if there's a good fix for this
 		blurNode.setPosition(0, 0, target.width, target.height)
 		updateRenderNodeProperties()
 
 		drawSnapshot()
 
-		// Draw on the system canvas
-		canvas.drawRenderNode(blurNode)
-		if (applyNoise) {
-			apply(canvas, blurView.context, blurView.width, blurView.height)
-		}
-		if (overlayColor != Color.TRANSPARENT) {
-			canvas.drawColor(overlayColor)
+		canvas.withClip(0f, 0f, blurView.width.toFloat(), blurView.height.toFloat()) {
+			// Draw on the system canvas
+			drawRenderNode(blurNode)
+			if (applyNoise) {
+				apply(this, blurView.context, blurView.width, blurView.height)
+			}
+			if (overlayColor != Color.TRANSPARENT) {
+				drawColor(overlayColor)
+			}
 		}
 	}
 	private fun updateRenderNodeProperties() {
@@ -90,6 +92,7 @@ class RenderNodeBlurController(
 		blurNode.pivotY = blurView.height / 2f - layoutTranslationY
 		blurNode.translationX = layoutTranslationX
 		blurNode.translationY = layoutTranslationY
+		if (isS31Plus()) applyBlur()
 	}
 	private fun drawSnapshot() {
 		val recordingCanvas = blurNode.beginRecording()

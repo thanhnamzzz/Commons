@@ -11,7 +11,6 @@ import androidx.annotation.ColorInt
 import common.libs.blurView.BlurController.Companion.DEFAULT_BLUR_RADIUS
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
-import androidx.core.graphics.withScale
 
 class PreDrawBlurController(
 	val blurView: View,
@@ -114,20 +113,47 @@ class PreDrawBlurController(
 
 		val bitmap = internalBitmap ?: return true
 
-		val scaleFactorH = blurView.height.toFloat() / bitmap.height
-		val scaleFactorW = blurView.width.toFloat() / bitmap.width
+		val scaleFactorH = blurView.height.toFloat() / bitmap.height.toFloat()
+		val scaleFactorW = blurView.width.toFloat() / bitmap.width.toFloat()
 
 		canvas?.let { c ->
-			c.withScale(scaleFactorW, scaleFactorH) {
-				blurAlgorithm!!.render(this, bitmap)
-			}
+			c.save()
+			c.clipRect(
+				0f,
+				0f,
+				blurView.width.toFloat(),
+				blurView.height.toFloat()
+			)
+
+			c.save()
+			c.scale(scaleFactorW, scaleFactorH)
+			blurAlgorithm!!.render(canvas, bitmap)
+			c.restore()
 
 			if (applyNoise) {
-				Noise.apply(c, blurView.context, blurView.width, blurView.height)
+				Noise.apply(
+					c,
+					blurView.context,
+					blurView.width,
+					blurView.height
+				)
 			}
+
 			if (overlayColor != TRANSPARENT) {
 				c.drawColor(overlayColor)
 			}
+			c.restore()
+
+//			c.withScale(scaleFactorW, scaleFactorH) {
+//				blurAlgorithm!!.render(this, bitmap)
+//			}
+//
+//			if (applyNoise) {
+//				Noise.apply(c, blurView.context, blurView.width, blurView.height)
+//			}
+//			if (overlayColor != TRANSPARENT) {
+//				c.drawColor(overlayColor)
+//			}
 		}
 		return true
 	}
