@@ -36,13 +36,8 @@ class BlurTarget @JvmOverloads constructor(
 			super.dispatchDraw(recordingCanvas)
 			renderNode!!.endRecording()
 			canvas.drawRenderNode(renderNode!!)
-//		} else {
-//			try {
-//				super.dispatchDraw(canvas)
-//			} catch (e: Exception) {
-//				Log.e("Namzzz", "BlurTarget: dispatchDraw", e)
-//				return
-//			}
+		} else {
+			super.dispatchDraw(canvas)
 		}
 	}
 
