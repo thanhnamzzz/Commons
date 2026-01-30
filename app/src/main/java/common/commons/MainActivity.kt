@@ -10,6 +10,8 @@ import androidx.core.view.WindowInsetsCompat
 import common.commons.blurView.BlurActivity
 import common.commons.databinding.ActivityMainBinding
 import common.libs.SimpleActivity
+import common.libs.animationView.AnimationView
+import common.libs.animationView.Attention
 import common.libs.extensions.PatternDate
 import common.libs.extensions.formatDate
 import common.libs.extensions.hideSystemNavigationBar
@@ -63,6 +65,14 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 
 				}
 			})
+		}
+
+		binding.btnAnimation.setOnClickListener {
+			AnimationView().apply {
+				setAnimation(Attention().Ruberband(binding.btnAnimation))
+				isLoop(true)
+				start()
+			}
 		}
 	}
 
