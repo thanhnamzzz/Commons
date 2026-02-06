@@ -26,11 +26,11 @@ class Attention {
 		return animatorSet
 	}
 
-	fun Pulse(view: View): AnimatorSet {
+	fun Pulse(view: View, toScale: Float = 1.1f): AnimatorSet {
 		val animatorSet = AnimatorSet()
 
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.1f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.1f, 1f)
+		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1f, toScale, 1f)
+		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, toScale, 1f)
 
 		animatorSet.playTogether(object1, object2)
 		return animatorSet
