@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Commons">
         <activity
+            android:name=".convert.ConvertActivity"
+            android:exported="false" />
+        <activity
             android:name=".blurView.BlurActivity"
             android:exported="false" />
         <activity

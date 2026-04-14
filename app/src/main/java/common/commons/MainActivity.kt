@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import common.commons.blurView.BlurActivity
+import common.commons.convert.ConvertActivity
 import common.commons.databinding.ActivityMainBinding
 import common.libs.SimpleActivity
 import common.libs.animationView.AnimationView
@@ -49,6 +50,10 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 
 		binding.btnBlurView.setOnClickListener {
 			startActivity(Intent(this, BlurActivity::class.java))
+		}
+
+		binding.btnConvert.setOnClickListener {
+			startActivity(Intent(this, ConvertActivity::class.java))
 		}
 
 		binding.bottomBar.apply {
