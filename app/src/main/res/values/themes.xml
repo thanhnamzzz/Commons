@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.Commons" parent="Base.Theme.Commons" />
+
+    <style name="NumberButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">?textAppearanceDisplayMedium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
 </resources>

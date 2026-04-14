@@ -5,12 +5,41 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#039BE5"
+    android:background="#BBDEFB"
     android:orientation="vertical"
     tools:context=".convert.ConvertActivity">
 
-    <common.commons.convert.KeypadView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/category_container"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/category"
+        app:boxStrokeColor="?colorSecondary"
+        app:boxStrokeWidth="0dp"
+        app:endIconTint="@color/black"
+        app:startIconTint="@color/black">
+
+        <AutoCompleteTextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:inputType="none"
+            android:textColor="@color/black"
+            tools:text="Length" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <common.commons.convert.DisplayView
+        android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <common.commons.convert.KeypadView
+        android:id="@+id/keypad"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

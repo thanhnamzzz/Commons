@@ -3,6 +3,8 @@
     <string name="title_activity_compose">ComposeActivity</string>
     <string name="title_activity_toast">ToastActivity</string>
 
+    <string name="zero_hint" translatable="false">0</string>
+
     <!--    String for CToast-->
     <string name="custom_colors">Custom Colors</string>
     <string name="use_compose">Use Compose</string>
@@ -28,4 +30,144 @@
     <string name="your_profile_was_updated_successfully">Your profile was updated successfully!</string>
     <string name="buy_me_a_coffee">Buy me a coffee</string>
     <string name="do_you_want_to_buy_me_a_coffee">Do you want to buy me a coffee?</string>
+
+
+
+    <!-- Converter names -->
+    <string name="mass">Mass</string>
+    <string name="volume">Volume</string>
+    <string name="speed">Speed</string>
+    <string name="length">Length</string>
+    <string name="time">Time</string>
+    <string name="area">Area</string>
+
+    <!-- Length units and symbols -->
+    <string name="metre">Metre</string>
+    <string name="millimetre">Millimetre</string>
+    <string name="centimetre">Centimetre</string>
+    <string name="decimetre">Decimetre</string>
+    <string name="kilometre">Kilometre</string>
+    <string name="inch">Inch</string>
+    <string name="mile">Mile</string>
+    <string name="foot">Foot</string>
+    <string name="yard">Yard</string>
+    <string name="astronomicalunit">Astronomical unit</string>
+    <string name="parsec">Parsec</string>
+    <string name="lightyear">Light-year</string>
+    <string name="nautical_mile">Nautical Mile</string>
+
+    <string name="metresymbol" translatable="false">m</string>
+    <string name="millimetresymbol" translatable="false">mm</string>
+    <string name="centimetresymbol" translatable="false">cm</string>
+    <string name="decimetresymbol" translatable="false">dm</string>
+    <string name="kilometresymbol" translatable="false">km</string>
+    <string name="inchsymbol" translatable="false">in</string>
+    <string name="milesymbol" translatable="false">mi</string>
+    <string name="footsymbol" translatable="false">ft</string>
+    <string name="yardsymbol" translatable="false">yd</string>
+    <string name="astronomicalunitsymbol" translatable="false">au</string>
+    <string name="parsecsymbol" translatable="false">pc</string>
+    <string name="lightyearsymbol" translatable="false">ly</string>
+    <string name="nmi" translatable="false">nmi</string>
+
+    <!-- Mass units and symbols -->
+    <string name="kilogram">Kilogram</string>
+    <string name="milligram">Milligram</string>
+    <string name="gram">Gram</string>
+    <string name="tonne">Tonne</string>
+    <string name="hundredweight">Hundredweight</string>
+    <string name="microgram">Microgram</string>
+    <string name="pound">Pound</string>
+    <string name="ounce">Ounce</string>
+
+    <string name="kilogramsymbol" translatable="false">kg</string>
+    <string name="gramsymbol" translatable="false">g</string>
+    <string name="milligramsymbol" translatable="false">mg</string>
+    <string name="hundredweightsymbol" translatable="false">cwt</string>
+    <string name="tonnesymbol" translatable="false">t</string>
+    <string name="microg" translatable="false">µg</string>
+    <string name="lb" translatable="false">lb</string>
+    <string name="oz" translatable="false">oz</string>
+
+    <!-- Area units and symbols -->
+    <string name="squaremetre">Square metre</string>
+    <string name="squarecentimetre">Square centimetre</string>
+    <string name="squaremillimetre">Square millimetre</string>
+    <string name="squarekilometre">Square kilometre</string>
+    <string name="squarefoot">Square foot</string>
+    <string name="squareyard">Square yard</string>
+    <string name="squaremile">Square mile</string>
+    <string name="squareinch">Square inch</string>
+    <string name="hectare">Hectare</string>
+    <string name="are">Are</string>
+    <string name="acre">Acre</string>
+    <string name="square_decimetre">Square decimetre</string>
+
+    <string name="hectaresymbol" translatable="false">ha</string>
+    <string name="aresymbol" translatable="false">a</string>
+    <string name="acresymbol" translatable="false">Acre</string>
+
+
+    <!-- Volume units and symbols -->
+    <string name="millilitre">Millilitre</string>
+    <string name="cubicmetre">Cubic metre</string>
+    <string name="litre">Litre</string>
+    <string name="gallon">US Gallon</string>
+    <string name="barrel">Barrel</string>
+    <string name="us_quart">US Quart</string>
+    <string name="us_pint">US Pint</string>
+    <string name="us_cup">US Cup</string>
+    <string name="cubic_inch">Cubic Inch</string>
+    <string name="cubic_foot">Cubic Foot</string>
+
+    <string name="litresymbol" translatable="false">L</string>
+    <string name="millilitresymbol" translatable="false">mL</string>
+    <string name="gallonsymbol" translatable="false">gal</string>
+    <string name="barrelsymbol" translatable="false">ba</string>
+    <string name="qt" translatable="false">qt</string>
+    <string name="pt" translatable="false">pt</string>
+    <string name="cup" translatable="false">cup</string>
+    <string name="ft" translatable="false">ft</string>
+
+
+    <!-- Speed units and symbols -->
+    <string name="metrespersecond">Metres per second</string>
+    <string name="kilometresperhour">Kilometres per hour</string>
+    <string name="knots">Knots</string>
+    <string name="footspersecond">Feet per second</string>
+    <string name="milesperhour">Miles per hour</string>
+    <string name="mach">Mach</string>
+
+    <string name="mpssymbol" translatable="false">m/s</string>
+    <string name="kmpssymbol" translatable="false">km/h</string>
+    <string name="miphsymbol" translatable="false">mi/h</string>
+    <string name="ftpssymbol" translatable="false">ft/s</string>
+    <string name="knotssymbol" translatable="false">kn</string>
+    <string name="ma" translatable="false">Ma</string>
+
+
+    <!-- Time units and symbols -->
+    <string name="nanosecond">Nanosecond</string>
+    <string name="microsecond">Microsecond</string>
+    <string name="millisecond">Millisecond</string>
+    <string name="second">Second</string>
+    <string name="minute">Minute</string>
+    <string name="hour">Hour</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="year">Year</string>
+    <string name="decade">Decade</string>
+    <string name="century">Century</string>
+
+    <string name="millisecondsymbol" translatable="false">ms</string>
+    <string name="microsecondsymbol" translatable="false">μs</string>
+    <string name="secondsymbol" translatable="false">s</string>
+    <string name="minutesymbol" translatable="false">min</string>
+    <string name="hoursymbol" translatable="false">h</string>
+    <string name="daysymbol" translatable="false">d</string>
+    <string name="weeksymbol" translatable="false">w</string>
+    <string name="yearsymbol" translatable="false">y</string>
+    <string name="ns" translatable="false">ns</string>
+    <string name="dec" translatable="false">dec</string>
+    <string name="cen" translatable="false">cen</string>
 </resources>
