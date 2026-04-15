@@ -25,134 +25,141 @@ class DisplayView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
+
+    private companion object {
+        const val TEXT_SIZE_LARGE = 48f
+        const val TEXT_SIZE_MEDIUM = 42f
+        const val TEXT_SIZE_SMALL = 36f
+        const val THRESHOLD_MEDIUM = 10
+        const val THRESHOLD_SMALL = 15
+        const val COMMA = ","
+        const val DOT = "."
+    }
+
     private val binding = DisplayBinding.inflate(LayoutInflater.from(context), this)
-    private var listConversionUnit: List<ConversionUnit> = emptyList()
+    private var units: List<ConversionUnit> = emptyList()
+
+    private val decimalFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()).apply {
+        groupingSeparator = ','
+    })
 
     private var sourceIndex = 0
         set(value) {
-            field = value
-            updateSuffixes()
-            performCalculation()
+            if (field != value) {
+                field = value
+                onUnitChanged()
+            }
         }
     private var resultIndex = 0
         set(value) {
-            field = value
-            updateSuffixes()
-            performCalculation()
+            if (field != value) {
+                field = value
+                onUnitChanged()
+            }
         }
 
     var convertData: ConvertData
-        get() = with(binding) {
-            ConvertData(
-                sourceValue.text.toString(),
-                resultValue.text.toString(),
-                sourceIndex,
-                resultIndex,
-            )
-        }
+        get() = ConvertData(
+            binding.sourceValue.text.toString(),
+            binding.resultValue.text.toString(),
+            sourceIndex,
+            resultIndex,
+        )
         set(value) = with(binding) {
             sourceValue.setText(formatDisplay(value.value))
             sourceIndex = value.from
             resultIndex = value.to
-            sourceSpinner.setText(listConversionUnit.getOrNull(sourceIndex)?.name ?: "", false)
-            resultSpinner.setText(listConversionUnit.getOrNull(resultIndex)?.name ?: "", false)
+            sourceSpinner.setText(units.getOrNull(sourceIndex)?.name ?: "", false)
+            resultSpinner.setText(units.getOrNull(resultIndex)?.name ?: "", false)
             performCalculation()
         }
 
     init {
         orientation = VERTICAL
-        with(binding) {
-            fab.setOnClickListener {
-                val current = convertData
-                convertData = current.swap()
-            }
-            sourceValue.showSoftInputOnFocus = false
-            resultValue.showSoftInputOnFocus = false
+        setupListeners()
+    }
 
-            sourceValue.doAfterTextChanged { text ->
-                val original = text.toString()
-                val clean = original.replace(",", "")
-                val formatted = formatDisplay(clean)
+    private fun setupListeners() = with(binding) {
+        fab.setOnClickListener {
+            convertData = convertData.swap()
+        }
 
-                if (original != formatted) {
-                    sourceValue.setText(formatted)
-                    sourceValue.setSelection(formatted.length)
-                } else {
-                    adjustTextSize(sourceValue)
-                    performCalculation()
-                }
-            }
+        sourceValue.showSoftInputOnFocus = false
+        resultValue.showSoftInputOnFocus = false
 
-            resultValue.doAfterTextChanged {
-                adjustTextSize(resultValue)
-            }
+        sourceValue.doAfterTextChanged { text ->
+            val original = text.toString()
+            val formatted = formatDisplay(original.unformat())
 
-            sourceSpinner.setOnItemClickListener { _, _, position, _ ->
-                sourceIndex = position
-            }
-
-            sourceSpinner.setOnDismissListener {
-                sourceSpinner.clearFocus()
-            }
-
-            resultSpinner.setOnItemClickListener { _, _, position, _ ->
-                resultIndex = position
-            }
-
-            resultSpinner.setOnDismissListener {
-                resultSpinner.clearFocus()
+            if (original != formatted) {
+                sourceValue.setText(formatted)
+                sourceValue.setSelection(formatted.length)
+            } else {
+                adjustTextSize(sourceValue)
+                performCalculation()
             }
         }
+
+        resultValue.doAfterTextChanged {
+            adjustTextSize(resultValue)
+        }
+
+        sourceSpinner.setOnItemClickListener { _, _, position, _ -> sourceIndex = position }
+        sourceSpinner.setOnDismissListener { sourceSpinner.clearFocus() }
+
+        resultSpinner.setOnItemClickListener { _, _, position, _ -> resultIndex = position }
+        resultSpinner.setOnDismissListener { resultSpinner.clearFocus() }
+    }
+
+    private fun onUnitChanged() {
+        updateSuffixes()
+        performCalculation()
     }
 
     private fun adjustTextSize(editText: EditText) {
-        val text = editText.text.toString()
-        val length = text.length
-        val newSizeSp = when {
-            length > 15 -> 36f
-            length > 10 -> 42f
-            else -> 48f
+        val length = editText.text.length
+        val size = when {
+            length > THRESHOLD_SMALL -> TEXT_SIZE_SMALL
+            length > THRESHOLD_MEDIUM -> TEXT_SIZE_MEDIUM
+            else -> TEXT_SIZE_LARGE
         }
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, newSizeSp)
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
     }
 
     fun setUnits(list: List<ConversionUnit>) {
-        listConversionUnit = list
-        val adapter = ArrayAdapter(
-            context, android.R.layout.simple_list_item_1,
-            listConversionUnit.map { it.name }
-        )
+        units = list
+        val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, units.map { it.name })
 
         with(binding) {
             sourceSpinner.setAdapter(adapter)
             resultSpinner.setAdapter(adapter)
-            if (listConversionUnit.isEmpty()) {
-                sourceSpinner.isEnabled = false
-                resultSpinner.isEnabled = false
-            } else {
+            
+            val hasUnits = units.isNotEmpty()
+            sourceSpinner.isEnabled = hasUnits
+            resultSpinner.isEnabled = hasUnits
+
+            if (hasUnits) {
                 sourceIndex = 0
-                resultIndex = 1
-                sourceSpinner.setText(listConversionUnit[sourceIndex].name, false)
-                resultSpinner.setText(listConversionUnit[resultIndex].name, false)
-                sourceSpinner.isEnabled = true
-                resultSpinner.isEnabled = true
+                resultIndex = if (units.size > 1) 1 else 0
+                sourceSpinner.setText(units[sourceIndex].name, false)
+                resultSpinner.setText(units[resultIndex].name, false)
             }
         }
     }
 
     fun clear() {
-        binding.resultValue.text?.clear()
         binding.sourceValue.text?.clear()
+        binding.resultValue.text?.clear()
     }
 
     fun appendText(text: CharSequence) {
         val editable = binding.sourceValue.text ?: return
-        val current = editable.toString().replace(",", "")
+        val current = editable.toString().unformat()
 
-        if (text == ".") {
+        if (text == DOT) {
             when {
                 current.isEmpty() -> editable.append("0.")
-                !current.contains(".") -> editable.append(".")
+                !current.contains(DOT) -> editable.append(DOT)
             }
             return
         }
@@ -166,24 +173,22 @@ class DisplayView @JvmOverloads constructor(
 
     fun removeLastDigit() {
         binding.sourceValue.text?.let {
-            if (it.isNotEmpty()) {
-                it.delete(it.length - 1, it.length)
-            }
+            if (it.isNotEmpty()) it.delete(it.length - 1, it.length)
         }
     }
 
     private fun performCalculation() {
-        val input = binding.sourceValue.text.toString().replace(",", "")
-        if (input.isEmpty() || input == ".") {
+        val input = binding.sourceValue.text.toString().unformat()
+        if (input.isEmpty() || input == DOT) {
             binding.resultValue.setText("")
             return
         }
 
         try {
-            val cleanInput = if (input.endsWith(".")) input.dropLast(1) else input
+            val cleanInput = input.removeSuffix(DOT)
             val source = BigDecimal(cleanInput, MC)
-            val sourceFactor = listConversionUnit[sourceIndex].factor.toBigDecimal()
-            val resultFactor = listConversionUnit[resultIndex].factor.toBigDecimal()
+            val sourceFactor = units[sourceIndex].factor.toBigDecimal()
+            val resultFactor = units[resultIndex].factor.toBigDecimal()
             val result = source * sourceFactor / resultFactor
             
             val resultStr = result.stripTrailingZeros().toPlainString()
@@ -194,23 +199,15 @@ class DisplayView @JvmOverloads constructor(
     }
 
     private fun formatDisplay(value: String): String {
-        if (value.isEmpty()) return ""
-        if (value == "." || value == "-") return value
+        if (value.isEmpty() || value == DOT || value == "-") return value
 
-        val clean = value.replace(",", "")
-        val parts = clean.split(".")
+        val parts = value.split(DOT)
         val integerPart = parts[0]
-        val decimalPart = if (parts.size > 1) "." + parts[1] else ""
+        val decimalPart = if (parts.size > 1) DOT + parts[1] else ""
 
         val formattedInt = try {
-            if (integerPart.isEmpty() || integerPart == "-") {
-                integerPart
-            } else {
-                val symbols = DecimalFormatSymbols(Locale.US)
-                symbols.groupingSeparator = ','
-                val df = DecimalFormat("#,###", symbols)
-                df.format(BigDecimal(integerPart))
-            }
+            if (integerPart.isEmpty() || integerPart == "-") integerPart
+            else decimalFormat.format(BigDecimal(integerPart))
         } catch (_: Exception) {
             integerPart
         }
@@ -219,12 +216,14 @@ class DisplayView @JvmOverloads constructor(
     }
 
     private fun updateSuffixes() {
-        if (listConversionUnit.isEmpty()) return
-        binding.sourceValueContainer.setHtmlSuffixText(listConversionUnit[sourceIndex].unitSymbol)
-        binding.resultValueContainer.setHtmlSuffixText(listConversionUnit[resultIndex].unitSymbol)
+        if (units.isEmpty()) return
+        binding.sourceValueContainer.setHtmlSuffix(units[sourceIndex].unitSymbol)
+        binding.resultValueContainer.setHtmlSuffix(units[resultIndex].unitSymbol)
     }
 
-    private fun TextInputLayout.setHtmlSuffixText(text: String) {
+    private fun TextInputLayout.setHtmlSuffix(text: String) {
         suffixText = text.parseAsHtml()
     }
+
+    private fun String.unformat() = replace(COMMA, "")
 }
