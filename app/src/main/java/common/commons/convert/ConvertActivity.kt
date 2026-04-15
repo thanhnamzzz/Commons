@@ -36,21 +36,17 @@ class ConvertActivity : SimpleActivity<ActivityConvertBinding>(ActivityConvertBi
         
         binding.category.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             updateCategorySelection(categories[position])
-            binding.display.clear()
         }
 
-        // Khởi tạo mặc định
         if (categories.isNotEmpty()) {
             updateCategorySelection(categories[0])
         }
     }
 
     private fun updateCategorySelection(category: ConverterCategory) {
-        // Cập nhật text hiển thị
+	    binding.display.clear()
         binding.category.setText(getString(category.titleRes), false)
-        // Cập nhật icon ở đầu
         binding.categoryContainer.setStartIconDrawable(category.iconRes)
-        // Cập nhật danh sách đơn vị đo
         binding.display.setUnits(category.getUnits(this))
     }
 

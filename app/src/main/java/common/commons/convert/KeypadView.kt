@@ -34,19 +34,16 @@ class KeypadView @JvmOverloads constructor(
 
     private fun setupListeners() {
         val numericClickListener = OnClickListener { view ->
-            MAPPER.get(view.id)?.let { listener?.onNumericClick(it) }
+            BUTTON_MAPPER.get(view.id)?.let { listener?.onNumericClick(it) }
         }
 
         with(binding) {
-            // Numeric buttons
             val numericButtons = listOf(
                 button0, button1, button2, button3, button4,
                 button5, button6, button7, button8, button9,
                 buttonDot
             )
             numericButtons.forEach { it.setOnClickListener(numericClickListener) }
-
-            // Action buttons
             buttonBackspace.setActionListener { listener?.onBackspaceClick(it) }
         }
     }
@@ -60,7 +57,7 @@ class KeypadView @JvmOverloads constructor(
     }
 
     companion object {
-        private val MAPPER = SparseArray<String>(12).apply {
+        private val BUTTON_MAPPER = SparseArray<String>().apply {
             put(R.id.button0, "0")
             put(R.id.button1, "1")
             put(R.id.button2, "2")
@@ -72,7 +69,6 @@ class KeypadView @JvmOverloads constructor(
             put(R.id.button8, "8")
             put(R.id.button9, "9")
             put(R.id.button_dot, ".")
-//            put(R.id.button_minus, "-")
         }
     }
 }

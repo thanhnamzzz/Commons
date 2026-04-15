@@ -16,14 +16,15 @@
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
-        app:suffixTextColor="?colorSurface">
+        app:suffixText="m"
+        app:suffixTextColor="?colorOnBackground">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/source_value"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:cursorVisible="false"
-            android:gravity="bottom|end"
+            android:gravity="center_vertical|end"
             android:hint="@string/zero_hint"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
@@ -31,7 +32,8 @@
             android:minLines="1"
             android:paddingTop="8dp"
             android:paddingBottom="4dp"
-            android:textColor="?colorSurface"
+            android:text="555"
+            android:textColor="?colorOnBackground"
             android:textSize="48sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -55,16 +57,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:labelFor="@id/source_spinner"
-                app:endIconTint="@color/black"
                 app:boxStrokeColor="?colorSecondary"
-                app:boxStrokeWidth="2dp">
+                app:boxStrokeWidth="2dp"
+                app:endIconTint="@color/black">
 
                 <AutoCompleteTextView
                     android:id="@+id/source_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:textColor="?colorSurface" />
+                    android:text="@string/metre"
+                    android:textColor="?colorOnBackground" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,16 +76,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:labelFor="@id/result_spinner"
-                app:endIconTint="@color/black"
                 app:boxStrokeColor="?colorSecondary"
-                app:boxStrokeWidth="2dp">
+                app:boxStrokeWidth="2dp"
+                app:endIconTint="@color/black">
 
                 <AutoCompleteTextView
                     android:id="@+id/result_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:textColor="?colorSurface" />
+                    android:text="@string/metre"
+                    android:textColor="?colorOnBackground" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,8 +100,8 @@
             android:background="@drawable/bg_circle_white"
             android:contentDescription="SwapUnit"
             android:padding="@dimen/_9sdp"
-            android:tint="@color/black"
-            app:srcCompat="@drawable/ic_swap_vert" />
+            app:srcCompat="@drawable/ic_swap_vert"
+            app:tint="@color/black" />
 
     </LinearLayout>
 
@@ -110,14 +114,15 @@
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
-        app:suffixTextColor="?colorSurface">
+        app:suffixText="m"
+        app:suffixTextColor="?colorOnBackground">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/result_value"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:cursorVisible="false"
-            android:gravity="top|end"
+            android:gravity="center_vertical|end"
             android:hint="@string/zero_hint"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
@@ -125,7 +130,8 @@
             android:minLines="1"
             android:paddingTop="8dp"
             android:paddingBottom="4dp"
-            android:textColor="?colorSurface"
+            android:text="55"
+            android:textColor="?colorOnBackground"
             android:textSize="48sp" />
 
     </com.google.android.material.textfield.TextInputLayout>

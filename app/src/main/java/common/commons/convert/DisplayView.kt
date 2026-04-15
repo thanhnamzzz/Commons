@@ -109,8 +109,8 @@ class DisplayView @JvmOverloads constructor(
         val text = editText.text.toString()
         val length = text.length
         val newSizeSp = when {
-            length > 15 -> 24f
-            length > 10 -> 36f
+            length > 15 -> 36f
+            length > 10 -> 42f
             else -> 48f
         }
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, newSizeSp)
