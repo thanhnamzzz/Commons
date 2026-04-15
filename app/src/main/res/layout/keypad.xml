@@ -12,7 +12,7 @@
         android:layout_weight="3"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button1"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:text="1" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button4"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:text="4" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button7"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:text="7" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button_dot"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
         android:layout_weight="3"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button2"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:layout_weight="1"
             android:text="2" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button5"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:text="5" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button8"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
             android:layout_weight="1"
             android:text="8" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button0"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -93,7 +93,7 @@
         android:layout_weight="3"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button3"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -101,7 +101,7 @@
             android:layout_weight="1"
             android:text="3" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button6"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -109,7 +109,7 @@
             android:layout_weight="1"
             android:text="6" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button9"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -117,7 +117,7 @@
             android:layout_weight="1"
             android:text="9" />
 
-        <Button
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/button_backspace"
             style="@style/NumberButton"
             android:layout_width="match_parent"
@@ -126,24 +126,5 @@
             android:text="C" />
 
     </LinearLayout>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_weight="2"-->
-<!--        android:orientation="vertical"-->
-<!--        tools:background="#33000000">-->
-
-<!--        <Button-->
-<!--            android:id="@+id/button_backspace"-->
-<!--            style="@style/NumberButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginHorizontal="4dp"-->
-<!--            android:layout_marginVertical="24dp"-->
-<!--            android:paddingHorizontal="0dp"-->
-<!--            android:text="C" />-->
-
-<!--    </LinearLayout>-->
 
 </merge>
