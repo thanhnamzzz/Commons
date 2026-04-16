@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:background="#33000000"
     tools:ignore="HardcodedText"
-    tools:layout_height="480dp"
     tools:parentTag="android.widget.LinearLayout">
 
     <LinearLayout
