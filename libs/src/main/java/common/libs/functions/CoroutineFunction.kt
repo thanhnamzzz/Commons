@@ -43,7 +43,7 @@ fun CoroutineScope.checkConditionLoopWithTimeout(
 	intervalMs: Long = 1000L
 ) {
 	launch(Dispatchers.Default) {
-		val result: Boolean? = withTimeoutOrNull(timeoutMs) {
+		val result: Boolean = withTimeoutOrNull(timeoutMs) {
 			while (!checkCondition()) {
 				delay(intervalMs)
 			}
@@ -52,7 +52,7 @@ fun CoroutineScope.checkConditionLoopWithTimeout(
 		} ?: false // Nếu withTimeoutOrNull hết giờ, trả về null. gán giá trị false cho biến result.
 
 		withContext(Dispatchers.Main) {
-			onConditionMet(result == true)
+			onConditionMet(result)
 		}
 	}
 }
