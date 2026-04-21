@@ -32,8 +32,11 @@
         app:blurOverlayColor="#27FFFFFF">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@mipmap/virgo" />
 
     </common.libs.blurView.BlurView>

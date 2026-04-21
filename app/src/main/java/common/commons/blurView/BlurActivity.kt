@@ -1,5 +1,6 @@
 package common.commons.blurView
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.activity.enableEdgeToEdge
@@ -56,5 +57,7 @@ class BlurActivity : SimpleActivity<ActivityBlurBinding>(ActivityBlurBinding::in
 
 			}
 		})
+
+		binding.btn.setOnClickListener { startActivity(Intent(this, Blur2Activity::class.java)) }
 	}
 }
