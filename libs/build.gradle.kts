@@ -8,7 +8,7 @@ plugins {
 
 android {
 	namespace = "common.libs"
-	compileSdk = 35
+	compileSdk = 36
 
 	defaultConfig {
 		minSdk = 23
