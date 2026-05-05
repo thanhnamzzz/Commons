@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#F0F0F0"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -78,6 +79,23 @@
             android:textSize="14sp"
             app:defaultColor="#3949AB"
             app:loaderColor="@android:color/white" />
+
+        <common.libs.transitionButton.TransitionButton
+            android:id="@+id/btn_transition3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_12sdp"
+            android:text="Transition Button 3"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:defaultColor="#B2DFDB"
+            app:errorColor="#FF1B44"
+            app:loaderColor="#000000" />
 
     </LinearLayout>
 

@@ -66,6 +66,10 @@ class TransitionButton @JvmOverloads constructor(
 			getString(R.styleable.TransitionButton_loaderColor)?.let { lc ->
 				loaderColor = ColorUtils.parse(lc)
 			}
+
+			getString(R.styleable.TransitionButton_errorColor)?.let { ec ->
+				errorColor = ColorUtils.parse(ec)
+			}
 		}
 
 		backgroundTintList = ColorStateList.valueOf(defaultColor)
@@ -143,6 +147,19 @@ class TransitionButton @JvmOverloads constructor(
 								onAnimationStopEndListener?.onAnimationStopEnd()
 							}
 						})
+					}
+				})
+			}
+
+			StopAnimationStyle.NULL -> {
+				currentState = State.ERROR
+
+				startWidthAnimation(initialWidth, object : AnimatorListenerAdapter() {
+					override fun onAnimationEnd(animation: Animator) {
+						currentState = State.IDLE
+						text = initialText
+						isClickable = true
+						onAnimationStopEndListener?.onAnimationStopEnd()
 					}
 				})
 			}
@@ -267,6 +284,6 @@ class TransitionButton @JvmOverloads constructor(
 	}
 
 	enum class StopAnimationStyle {
-		EXPAND, SHAKE
+		EXPAND, SHAKE, NULL
 	}
 }

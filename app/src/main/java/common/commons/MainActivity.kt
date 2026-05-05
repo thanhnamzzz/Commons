@@ -94,6 +94,10 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 //			binding.btnTransition2.setMessageAnimationDuration(1000)
 			binding.btnTransition2.showErrorMessage("Animation Failed")
 		}
+		val listener3 = TransitionButton.OnAnimationStopEndListener {
+			binding.btnTransition3.setMessageAnimationDuration(1200)
+			binding.btnTransition3.showErrorMessage("Animation Failed")
+		}
 		binding.btnTransition1.setOnClickListener {
 			binding.btnTransition1.startAnimation()
 
@@ -101,6 +105,16 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 				binding.btnTransition1.stopAnimation(
 					TransitionButton.StopAnimationStyle.EXPAND,
 					listener1
+				)
+			}, 2000)
+		}
+		binding.btnTransition3.setOnClickListener {
+			binding.btnTransition3.startAnimation()
+
+			Handler(Looper.getMainLooper()).postDelayed({
+				binding.btnTransition3.stopAnimation(
+					TransitionButton.StopAnimationStyle.NULL,
+					listener3
 				)
 			}, 2000)
 		}
