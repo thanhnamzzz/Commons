@@ -111,4 +111,9 @@
         <attr name="tabTitleInactiveColor" format="reference|color" />
         <attr name="tabCustomPadding" format="dimension|reference" />
     </declare-styleable>
+
+    <declare-styleable name="TransitionButton">
+        <attr name="defaultColor" format="string" />
+        <attr name="loaderColor" format="string" />
+    </declare-styleable>
 </resources>

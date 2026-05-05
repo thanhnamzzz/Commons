@@ -2,6 +2,8 @@ package common.commons
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,6 +24,7 @@ import common.libs.functions.openAppSettingsWifi
 import common.libs.functions.openPanelNetwork
 import common.libs.functions.versionApp
 import common.libs.navigationBar.IslandNavigationBarView
+import common.libs.transitionButton.TransitionButton
 import common.libs.views.TypeToast
 
 class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -79,6 +82,38 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 				start()
 			}
 		}
+		val listener1 = TransitionButton.OnAnimationStopEndListener {
+			toastMess("Animation successfully", TypeToast.TOAST_SUCCESS)
+			val intent = Intent(this, BlurActivity::class.java).apply {
+				addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+			}
+			startActivity(intent)
+		}
+		val listener2 = TransitionButton.OnAnimationStopEndListener {
+//			toastMess("Animation successfully", TypeToast.TOAST_ERROR)
+//			binding.btnTransition2.setMessageAnimationDuration(1000)
+			binding.btnTransition2.showErrorMessage("Animation Failed")
+		}
+		binding.btnTransition1.setOnClickListener {
+			binding.btnTransition1.startAnimation()
+
+			Handler(Looper.getMainLooper()).postDelayed({
+				binding.btnTransition1.stopAnimation(
+					TransitionButton.StopAnimationStyle.EXPAND,
+					listener1
+				)
+			}, 2000)
+		}
+		binding.btnTransition2.setOnClickListener {
+			binding.btnTransition2.startAnimation()
+
+			Handler(Looper.getMainLooper()).postDelayed({
+				binding.btnTransition2.stopAnimation(
+					TransitionButton.StopAnimationStyle.SHAKE,
+					listener2
+				)
+			}, 2000)
+		}
 	}
 
 	override fun onPause() {
@@ -89,6 +124,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 	override fun onResume() {
 		super.onResume()
 		Log.d("Namzzz", "MainActivity: onResume")
+		binding.btnTransition1.reset()
 	}
 
 	private val launcherNetwork =
