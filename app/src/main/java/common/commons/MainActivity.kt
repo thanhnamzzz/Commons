@@ -99,7 +99,9 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 			binding.btnTransition3.showErrorMessage("Animation Failed")
 		}
 		binding.btnTransition1.setOnClickListener {
-			binding.btnTransition1.startAnimation()
+			binding.btnTransition1.startAnimation {
+				Log.i("Namzzz", "MainActivity: btnTransition1 startAnimation DONE")
+			}
 
 			Handler(Looper.getMainLooper()).postDelayed({
 				binding.btnTransition1.stopAnimation(

@@ -76,7 +76,7 @@ class TransitionButton @JvmOverloads constructor(
 		background = ContextCompat.getDrawable(context, R.drawable.transition_button_shape_idle)
 	}
 
-	fun startAnimation() {
+	fun startAnimation(animationEnd: () -> Unit = {}) {
 		currentState = State.PROGRESS
 		isMorphingInProgress = true
 
@@ -90,6 +90,7 @@ class TransitionButton @JvmOverloads constructor(
 		startWidthAnimation(initialHeight, object : AnimatorListenerAdapter() {
 			override fun onAnimationEnd(animation: Animator) {
 				isMorphingInProgress = false
+				animationEnd()
 			}
 		})
 	}
