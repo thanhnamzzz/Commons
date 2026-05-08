@@ -132,7 +132,8 @@ class TransitionButton @JvmOverloads constructor(
 
 	fun stopAnimation(
 		stopAnimationStyle: StopAnimationStyle,
-		onAnimationStopEndListener: OnAnimationStopEndListener? = null
+		onAnimationStopEndListener: OnAnimationStopEndListener? = null,
+		optionFixStop: FIX = FIX.FIX2,
 	) {
 		when (stopAnimationStyle) {
 			StopAnimationStyle.SHAKE -> {
@@ -173,7 +174,7 @@ class TransitionButton @JvmOverloads constructor(
 						super.onAnimationEnd(animation)
 						onAnimationStopEndListener?.onAnimationStopEnd()
 					}
-				})
+				}, optionFixStop)
 			}
 		}
 	}
@@ -232,8 +233,39 @@ class TransitionButton @JvmOverloads constructor(
 		}
 	}
 
-	private fun startScaleAnimation(animationListener: Animation.AnimationListener) {
-		val ts = (WindowUtils.getHeight(context).toFloat() / height * 2.1).toFloat()
+	private fun startScaleAnimation(
+		animationListener: Animation.AnimationListener,
+		option: FIX = FIX.FIX2
+	) {
+		val ts = when (option) {
+			FIX.FIX1 -> (WindowUtils.getHeight(context).toFloat() / height * 2.1).toFloat()
+			FIX.FIX2 -> {
+				/** fix 1 */
+				// Lấy chiều cao màn hình qua resources của context
+				val displayMetrics = context.resources.displayMetrics
+				val screenHeight = displayMetrics.heightPixels
+				val screenWidth = displayMetrics.widthPixels
+
+				// Lấy cạnh lớn nhất để đảm bảo khi xoay tròn nó phủ kín góc
+				val maxDimension = maxOf(screenHeight, screenWidth)
+
+				// Tính toán tỉ lệ scale (nhân thêm hệ số an toàn 2.5 thay vì 2.1)
+				(maxDimension.toFloat() / height * 2.5f)
+			}
+
+			FIX.FIX3 -> {
+				// Tìm view gốc của layout hiện tại
+				val rootView = rootView
+				val maxDimension = maxOf(rootView.width, rootView.height)
+
+				// Nếu view chưa được đo (width=0), fallback về displayMetrics
+				val finalDimension = if (maxDimension > 0) maxDimension.toFloat()
+				else context.resources.displayMetrics.heightPixels.toFloat()
+
+				(finalDimension / height * 2.5f)
+			}
+		}
+
 		ScaleAnimation(
 			1f, ts,
 			1f, ts,

@@ -2,8 +2,6 @@ package common.commons
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +15,7 @@ import common.libs.animationView.AnimationView
 import common.libs.animationView.Attention
 import common.libs.extensions.PatternDate
 import common.libs.extensions.formatDate
+import common.libs.extensions.handlerFunction
 import common.libs.extensions.hideSystemNavigationBar
 import common.libs.extensions.isQ29Plus
 import common.libs.extensions.toastMess
@@ -24,6 +23,7 @@ import common.libs.functions.openAppSettingsWifi
 import common.libs.functions.openPanelNetwork
 import common.libs.functions.versionApp
 import common.libs.navigationBar.IslandNavigationBarView
+import common.libs.transitionButton.FIX
 import common.libs.transitionButton.TransitionButton
 import common.libs.views.TypeToast
 
@@ -41,7 +41,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 		val m1 = "yyyy-MM-dd HH:mm:ss".formatDate(2024, 9, 27)
 		val m2 = PatternDate.EEEE_dd_MM_yyyy.formatDate(2025, 10, 1)
 
-		toastMess(getString(R.string.app_name), TypeToast.TOAST_SUCCESS)
+		toastMess(getString(R.string.app_name), TypeToast.SUCCESS)
 		Log.d("Namzzz", "MainActivity: onCreate m1 = $m1")
 		Log.d("Namzzz", "MainActivity: onCreate m2 = $m2")
 		Log.d("Namzzz", "MainActivity: onCreate version App = ${versionApp()}")
@@ -83,7 +83,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 			}
 		}
 		val listener1 = TransitionButton.OnAnimationStopEndListener {
-			toastMess("Animation successfully", TypeToast.TOAST_SUCCESS)
+			toastMess("Animation successfully", TypeToast.SUCCESS)
 			val intent = Intent(this, BlurActivity::class.java).apply {
 				addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 			}
@@ -103,33 +103,39 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 				Log.i("Namzzz", "MainActivity: btnTransition1 startAnimation DONE")
 			}
 
-			Handler(Looper.getMainLooper()).postDelayed({
+			handlerFunction(2000) {
 				binding.btnTransition1.stopAnimation(
 					TransitionButton.StopAnimationStyle.EXPAND,
-					listener1
+					listener1,
+					FIX.FIX3
 				)
-			}, 2000)
+			}
 		}
 		binding.btnTransition3.setOnClickListener {
 			binding.btnTransition3.startAnimation()
 
-			Handler(Looper.getMainLooper()).postDelayed({
+			handlerFunction(2000) {
 				binding.btnTransition3.stopAnimation(
 					TransitionButton.StopAnimationStyle.NULL,
 					listener3
 				)
-			}, 2000)
+			}
 		}
 		binding.btnTransition2.setOnClickListener {
 			binding.btnTransition2.startAnimation()
 
-			Handler(Looper.getMainLooper()).postDelayed({
+			handlerFunction(2000) {
 				binding.btnTransition2.stopAnimation(
 					TransitionButton.StopAnimationStyle.SHAKE,
 					listener2
 				)
-			}, 2000)
+			}
 		}
+
+		binding.toast1.setOnClickListener { toastMess("Success", TypeToast.SUCCESS) }
+		binding.toast2.setOnClickListener { toastMess("Error", TypeToast.ERROR) }
+		binding.toast3.setOnClickListener { toastMess("Warning", TypeToast.WARNING) }
+		binding.toast4.setOnClickListener { toastMess("None", TypeToast.NONE) }
 	}
 
 	override fun onPause() {
