@@ -46,3 +46,10 @@ fun Activity.activityMakeCustomAnimation(enterRes: Int, exitRes: Int): Bundle? {
 fun activityMakeBasicAnimation(): Bundle? {
 	return ActivityOptionsCompat.makeBasic().toBundle()
 }
+
+/**
+ * Chuyển Activity mà không có hiệu ứng (No Animation)
+ */
+fun Activity.activityMakeNoAnimation(): Bundle? {
+	return ActivityOptionsCompat.makeCustomAnimation(this, 0, 0).toBundle()
+}
