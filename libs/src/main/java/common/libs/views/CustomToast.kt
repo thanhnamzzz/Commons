@@ -55,19 +55,30 @@ private fun Activity.showCustomOverlayToast(
 		TypeToast.SUCCESS -> {
 			layoutT.setBackgroundResource(R.drawable.bg_toast_success)
 			imageT.setImageResource(R.drawable.icon_check)
+			imageT.setColorFilter(getColor(R.color.toast_success_text))
+			messageT.setTextColor(getColor(R.color.toast_success_text))
 		}
 		TypeToast.ERROR -> {
 			layoutT.setBackgroundResource(R.drawable.bg_toast_error)
 			imageT.setImageResource(R.drawable.icon_close)
+			imageT.setColorFilter(getColor(R.color.toast_error_text))
+			messageT.setTextColor(getColor(R.color.toast_error_text))
 		}
 		TypeToast.WARNING -> {
 			layoutT.setBackgroundResource(R.drawable.bg_toast_warning)
 			imageT.setImageResource(R.drawable.icon_warning)
+			imageT.setColorFilter(getColor(R.color.toast_warning_text))
+			messageT.setTextColor(getColor(R.color.toast_warning_text))
 		}
 		TypeToast.NONE -> {
 			layoutT.setBackgroundResource(R.drawable.bg_toast_none)
 			imageT.gone()
-			layoutT.setPadding(80, 30, 80, 30)
+			imageT.setColorFilter(getColor(R.color.toast_info_text))
+			// Sử dụng dp thay vì px cứng để padding cân đối trên mọi màn hình
+			val hPadding = (24 * resources.displayMetrics.density).toInt()
+			val vPadding = (14 * resources.displayMetrics.density).toInt()
+			layoutT.setPadding(hPadding, vPadding, hPadding, vPadding)
+			messageT.setTextColor(getColor(R.color.toast_info_text))
 		}
 	}
 	messageT.text = message
