@@ -5,61 +5,132 @@ package common.libs.animationView
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
+import android.view.View
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.Interpolator
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 
-class AnimationView() {
-    var du: Long = 1000
-    private var isLoop: Boolean = false
-    private var delayLoop: Long = 1000
+class AnimationView : DefaultLifecycleObserver {
+    /**
+     * Thời gian chạy animation (ms)
+     */
+    var duration: Long = 1000
+
+    /**
+     * Có lặp lại animation hay không
+     */
+    var isLoop: Boolean = false
+
+    /**
+     * Thời gian chờ giữa các lần lặp (ms)
+     */
+    var delayLoop: Long = 1000
+
+    /**
+     * Bộ nội suy (Interpolator) cho animation
+     */
+    var interpolator: Interpolator = AccelerateInterpolator()
+
     private var isPause: Boolean = false
+    private var internalAnimatorSet: AnimatorSet? = null
 
-    lateinit var animatorSet: AnimatorSet
+    fun isPaused(): Boolean = isPause
 
     fun setAnimation(animatorSet: AnimatorSet) {
-        this.animatorSet = animatorSet
+        this.internalAnimatorSet = animatorSet
     }
 
-    fun setDuration(duration: Long) {
-        this.du = duration
-    }
+    /**
+     * Bắt đầu chạy animation
+     * @param onEnd Callback khi animation kết thúc (nếu không lặp)
+     */
+    fun start(onEnd: () -> Unit = {}) {
+        val animator = internalAnimatorSet ?: return
 
-    fun isLoop(isLoop: Boolean) {
-        this.isLoop = isLoop
-    }
-
-    fun setDelayLoop(delayLoop: Long) {
-        this.delayLoop = delayLoop
-    }
-
-    fun start(animationEnd: () -> Unit = {}) {
-        animatorSet.removeAllListeners()
-        animatorSet.duration = du
-        animatorSet.interpolator = AccelerateInterpolator()
-        animatorSet.addListener(object : AnimatorListenerAdapter() {
+        animator.removeAllListeners()
+        animator.duration = duration
+        animator.interpolator = interpolator
+        animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 if (isLoop && !isPause) {
-                    animatorSet.startDelay = delayLoop
-                    animatorSet.start()
+                    animator.startDelay = delayLoop
+                    animator.start()
                 }
-                animationEnd()
+                onEnd()
             }
         })
-        animatorSet.start()
+        isPause = false
+        animator.start()
     }
+
+    fun isRunning(): Boolean = internalAnimatorSet?.isRunning ?: false
 
     fun pause() {
         isPause = true
-        animatorSet.pause()
+        internalAnimatorSet?.pause()
     }
 
     fun resume() {
         isPause = false
-        animatorSet.resume()
+        internalAnimatorSet?.resume()
     }
 
-    fun cancel() {
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
+        pause()
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+        resume()
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        destroy()
+    }
+
+    fun cancel(callback: () -> Unit = {}) {
         isPause = true
-        animatorSet.cancel()
+        internalAnimatorSet?.cancel()
+        callback()
+    }
+
+    /**
+     * Hủy animation và giải phóng tài nguyên
+     */
+    fun destroy(callback: () -> Unit = {}) {
+        cancel(callback)
+        internalAnimatorSet?.removeAllListeners()
+        internalAnimatorSet = null
+    }
+
+    fun reset(view: View?) {
+        view?.apply {
+            alpha = 1f
+            scaleX = 1f
+            scaleY = 1f
+            translationX = 0f
+            translationY = 0f
+            rotation = 0f
+            rotationX = 0f
+            rotationY = 0f
+        }
+    }
+}
+
+fun View.playAnimation(
+    animatorSet: AnimatorSet,
+    duration: Long = 1000,
+    isLoop: Boolean = false,
+    onEnd: () -> Unit = {}
+): AnimationView {
+    return AnimationView().apply {
+        this.setAnimation(animatorSet)
+        this.duration = duration
+        this.isLoop = isLoop
+        this.start(onEnd)
     }
 }

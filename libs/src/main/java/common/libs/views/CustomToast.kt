@@ -7,12 +7,11 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import common.libs.R
 import common.libs.extensions.gone
 import java.lang.ref.WeakReference
@@ -30,7 +29,9 @@ private val toastHandler = Handler(Looper.getMainLooper())
 private fun Activity.showCustomOverlayToast(
 	typeToast: TypeToast,
 	message: String,
-	duration: Long = Duration.SHORT
+	duration: Long = Duration.SHORT,
+	style: ToastStyle = ToastStyle.VERTICAL,
+	theme: ToastTheme = ToastTheme.SOFT,
 ) {
 	if (isFinishing || isDestroyed) return
 	val rootView = findViewById<ViewGroup>(android.R.id.content) ?: return
@@ -41,8 +42,10 @@ private fun Activity.showCustomOverlayToast(
 	}
 
 	val inflater = LayoutInflater.from(this)
+	val layoutRes =
+		if (style == ToastStyle.HORIZONTAL) R.layout.layout_toast_horizontal else R.layout.layout_toast_vertical
 	val toastView = try {
-		inflater.inflate(R.layout.layout_my_toast, rootView, false)
+		inflater.inflate(layoutRes, rootView, false)
 	} catch (_: Exception) {
 		return
 	}
@@ -51,36 +54,49 @@ private fun Activity.showCustomOverlayToast(
 	val messageT = toastView.findViewById<TextView>(R.id.message_toast)
 	val imageT = toastView.findViewById<ImageView>(R.id.image_toast)
 
-	when (typeToast) {
-		TypeToast.SUCCESS -> {
-			layoutT.setBackgroundResource(R.drawable.bg_toast_success)
-			imageT.setImageResource(R.drawable.icon_check)
-			imageT.setColorFilter(getColor(R.color.toast_success_text))
-			messageT.setTextColor(getColor(R.color.toast_success_text))
-		}
-		TypeToast.ERROR -> {
-			layoutT.setBackgroundResource(R.drawable.bg_toast_error)
-			imageT.setImageResource(R.drawable.icon_close)
-			imageT.setColorFilter(getColor(R.color.toast_error_text))
-			messageT.setTextColor(getColor(R.color.toast_error_text))
-		}
-		TypeToast.WARNING -> {
-			layoutT.setBackgroundResource(R.drawable.bg_toast_warning)
-			imageT.setImageResource(R.drawable.icon_warning)
-			imageT.setColorFilter(getColor(R.color.toast_warning_text))
-			messageT.setTextColor(getColor(R.color.toast_warning_text))
-		}
-		TypeToast.NONE -> {
-			layoutT.setBackgroundResource(R.drawable.bg_toast_none)
-			imageT.gone()
-			imageT.setColorFilter(getColor(R.color.toast_info_text))
-			// Sử dụng dp thay vì px cứng để padding cân đối trên mọi màn hình
-			val hPadding = (24 * resources.displayMetrics.density).toInt()
-			val vPadding = (14 * resources.displayMetrics.density).toInt()
-			layoutT.setPadding(hPadding, vPadding, hPadding, vPadding)
-			messageT.setTextColor(getColor(R.color.toast_info_text))
-		}
+	val (bgColorRes, textColorRes, iconRes) = when (typeToast) {
+		TypeToast.SUCCESS -> Triple(
+			if (theme == ToastTheme.SOLID) R.color.toast_success_solid else R.color.toast_success_bg,
+			if (theme == ToastTheme.SOLID) R.color.white else R.color.toast_success_text,
+			R.drawable.icon_check
+		)
+
+		TypeToast.ERROR -> Triple(
+			if (theme == ToastTheme.SOLID) R.color.toast_error_solid else R.color.toast_error_bg,
+			if (theme == ToastTheme.SOLID) R.color.white else R.color.toast_error_text,
+			R.drawable.icon_close
+		)
+
+		TypeToast.WARNING -> Triple(
+			if (theme == ToastTheme.SOLID) R.color.toast_warning_solid else R.color.toast_warning_bg,
+			if (theme == ToastTheme.SOLID) R.color.white else R.color.toast_warning_text,
+			R.drawable.icon_warning
+		)
+
+		TypeToast.NONE -> Triple(
+			if (theme == ToastTheme.SOLID) R.color.toast_info_solid else R.color.toast_info_bg,
+			if (theme == ToastTheme.SOLID) R.color.white else R.color.toast_info_text,
+			null
+		)
 	}
+
+	val bgDrawable = ContextCompat.getDrawable(this, R.drawable.bg_toast_none)?.mutate()
+	bgDrawable?.setTint(ContextCompat.getColor(this, bgColorRes))
+	layoutT.background = bgDrawable
+
+	val textColor = ContextCompat.getColor(this, textColorRes)
+	messageT.setTextColor(textColor)
+
+	if (iconRes != null) {
+		imageT.setImageResource(iconRes)
+		imageT.setColorFilter(textColor)
+	} else {
+		imageT.gone()
+		val hPadding = (24 * resources.displayMetrics.density).toInt()
+		val vPadding = (14 * resources.displayMetrics.density).toInt()
+		layoutT.setPadding(hPadding, vPadding, hPadding, vPadding)
+	}
+
 	messageT.text = message
 
 	val params = FrameLayout.LayoutParams(
@@ -94,45 +110,64 @@ private fun Activity.showCustomOverlayToast(
 	rootView.addView(toastView, params)
 	currentToastView = WeakReference(toastView)
 
-	val fadeIn = AlphaAnimation(0f, 1f).apply {
-		this.duration = 300
-		fillAfter = true
-	}
-	toastView.startAnimation(fadeIn)
+	// Hiệu ứng Fade In
+	toastView.alpha = 0f
+	toastView.animate()
+		.alpha(1f)
+		.setDuration(300)
+		.start()
 
 	toastHandler.postDelayed({
 		if (!isFinishing && !isDestroyed && toastView.parent != null) {
-			val fadeOut = AlphaAnimation(1f, 0f).apply {
-				this.duration = 300
-				fillAfter = true
-				setAnimationListener(object : Animation.AnimationListener {
-					override fun onAnimationEnd(animation: Animation?) {
-						(toastView.parent as? ViewGroup)?.removeView(toastView)
-						if (currentToastView?.get() == toastView) {
-							currentToastView = null
-						}
+			toastView.animate()
+				.alpha(0f)
+				.setDuration(300)
+				.withEndAction {
+					(toastView.parent as? ViewGroup)?.removeView(toastView)
+					if (currentToastView?.get() == toastView) {
+						currentToastView = null
 					}
-					override fun onAnimationStart(animation: Animation?) {}
-					override fun onAnimationRepeat(animation: Animation?) {}
-				})
-			}
-			toastView.startAnimation(fadeOut)
+				}
+				.start()
 		}
 	}, duration)
 }
 
-fun Activity.showSuccess(message: String, duration: Long = Duration.SHORT) {
-	showCustomOverlayToast(TypeToast.SUCCESS, message, duration)
+/**
+ * Các hàm tiện ích để gọi nhanh
+ */
+fun Activity.showSuccess(
+	message: String,
+	duration: Long = Duration.SHORT,
+	style: ToastStyle = ToastStyle.VERTICAL,
+	theme: ToastTheme = ToastTheme.SOFT,
+) {
+	showCustomOverlayToast(TypeToast.SUCCESS, message, duration, style, theme)
 }
 
-fun Activity.showError(message: String, duration: Long = Duration.SHORT) {
-	showCustomOverlayToast(TypeToast.ERROR, message, duration)
+fun Activity.showError(
+	message: String,
+	duration: Long = Duration.SHORT,
+	style: ToastStyle = ToastStyle.VERTICAL,
+	theme: ToastTheme = ToastTheme.SOFT,
+) {
+	showCustomOverlayToast(TypeToast.ERROR, message, duration, style, theme)
 }
 
-fun Activity.showWarning(message: String, duration: Long = Duration.SHORT) {
-	showCustomOverlayToast(TypeToast.WARNING, message, duration)
+fun Activity.showWarning(
+	message: String,
+	duration: Long = Duration.SHORT,
+	style: ToastStyle = ToastStyle.VERTICAL,
+	theme: ToastTheme = ToastTheme.SOFT,
+) {
+	showCustomOverlayToast(TypeToast.WARNING, message, duration, style, theme)
 }
 
-fun Activity.showNone(message: String, duration: Long = Duration.SHORT) {
-	showCustomOverlayToast(TypeToast.NONE, message, duration)
+fun Activity.showNone(
+	message: String,
+	duration: Long = Duration.SHORT,
+	style: ToastStyle = ToastStyle.VERTICAL,
+	theme: ToastTheme = ToastTheme.SOFT,
+) {
+	showCustomOverlayToast(TypeToast.NONE, message, duration, style, theme)
 }

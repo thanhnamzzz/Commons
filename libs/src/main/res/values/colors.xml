@@ -22,4 +22,10 @@
     <color name="toast_warning_text">#F57F17</color>
     <color name="toast_info_bg">#E3F2FD</color>
     <color name="toast_info_text">#1565C0</color>
+
+    <!-- Custom Toast Colors (Solid/Bold) -->
+    <color name="toast_success_solid">#2E7D32</color>
+    <color name="toast_error_solid">#C62828</color>
+    <color name="toast_warning_solid">#F57F17</color>
+    <color name="toast_info_solid">#1565C0</color>
 </resources>

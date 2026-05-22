@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.MutableLiveData
 import common.commons.blurView.BlurActivity
 import common.commons.convert.ConvertActivity
 import common.commons.databinding.ActivityMainBinding
@@ -25,9 +26,18 @@ import common.libs.functions.versionApp
 import common.libs.navigationBar.IslandNavigationBarView
 import common.libs.transitionButton.FIX
 import common.libs.transitionButton.TransitionButton
+import common.libs.views.ToastStyle
+import common.libs.views.ToastTheme
 import common.libs.views.TypeToast
 
 class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+	private val animationButton: AnimationView by lazy {
+		AnimationView().apply {
+			setAnimation(Attention().Ruberband(binding.btnAnimation))
+			isLoop = true
+		}
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		enableEdgeToEdge()
@@ -76,11 +86,21 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 		}
 
 		binding.btnAnimation.setOnClickListener {
-			AnimationView().apply {
-				setAnimation(Attention().Ruberband(binding.btnAnimation))
-				isLoop(true)
-				start()
+			if (animationButton.isRunning()) {
+				if (animationButton.isPaused()) {
+					animationButton.resume()
+				} else {
+					animationButton.pause()
+				}
+			} else {
+				animationButton.start()
 			}
+		}
+		binding.btnAnimation.setOnLongClickListener {
+			if (animationButton.isRunning()) {
+				animationButton.cancel { animationButton.reset(binding.btnAnimation) }
+			}
+			true
 		}
 		val listener1 = TransitionButton.OnAnimationStopEndListener {
 			toastMess("Animation successfully", TypeToast.SUCCESS)
@@ -132,11 +152,62 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 			}
 		}
 
-		binding.toast1.setOnClickListener { toastMess("Success", TypeToast.SUCCESS) }
-		binding.toast2.setOnClickListener { toastMess("Error", TypeToast.ERROR) }
-		binding.toast3.setOnClickListener { toastMess("Warning", TypeToast.WARNING) }
-		binding.toast4.setOnClickListener { toastMess("None", TypeToast.NONE) }
+		toastTheme.observe(this) {
+			binding.toastTheme.text = when (it) {
+				ToastTheme.SOFT -> getString(R.string.soft)
+				ToastTheme.SOLID -> getString(R.string.solid)
+			}
+		}
+
+		toastStyle.observe(this) {
+			binding.toastStyle.text = when (it) {
+				ToastStyle.VERTICAL -> getString(R.string.vertical)
+				ToastStyle.HORIZONTAL -> getString(R.string.horizontal)
+			}
+		}
+
+		binding.toastStyle.setOnClickListener {
+			toastStyle.value =
+				if (toastStyle.value == ToastStyle.VERTICAL) ToastStyle.HORIZONTAL else ToastStyle.VERTICAL
+		}
+
+		binding.toastTheme.setOnClickListener {
+			toastTheme.value =
+				if (toastTheme.value == ToastTheme.SOFT) ToastTheme.SOLID else ToastTheme.SOFT
+		}
+
+		binding.toast1.setOnClickListener {
+			toastMess(
+				"Success", TypeToast.SUCCESS,
+				style = toastStyle.value ?: ToastStyle.VERTICAL,
+				theme = toastTheme.value ?: ToastTheme.SOFT
+			)
+		}
+		binding.toast2.setOnClickListener {
+			toastMess(
+				"Error", TypeToast.ERROR,
+				style = toastStyle.value ?: ToastStyle.VERTICAL,
+				theme = toastTheme.value ?: ToastTheme.SOFT
+			)
+		}
+		binding.toast3.setOnClickListener {
+			toastMess(
+				"Warning", TypeToast.WARNING,
+				style = toastStyle.value ?: ToastStyle.VERTICAL,
+				theme = toastTheme.value ?: ToastTheme.SOFT
+			)
+		}
+		binding.toast4.setOnClickListener {
+			toastMess(
+				"None", TypeToast.NONE,
+				style = toastStyle.value ?: ToastStyle.VERTICAL,
+				theme = toastTheme.value ?: ToastTheme.SOFT
+			)
+		}
 	}
+
+	private val toastStyle = MutableLiveData(ToastStyle.VERTICAL)
+	private val toastTheme = MutableLiveData(ToastTheme.SOFT)
 
 	override fun onPause() {
 		super.onPause()

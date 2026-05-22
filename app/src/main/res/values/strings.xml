@@ -169,4 +169,8 @@
     <string name="ns" translatable="false">ns</string>
     <string name="dec" translatable="false">dec</string>
     <string name="cen" translatable="false">cen</string>
+    <string name="vertical">vertical</string>
+    <string name="horizontal">horizontal</string>
+    <string name="soft">soft</string>
+    <string name="solid">solid</string>
 </resources>

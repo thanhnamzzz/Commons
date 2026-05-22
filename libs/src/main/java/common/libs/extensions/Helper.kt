@@ -9,6 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import common.libs.views.Duration
+import common.libs.views.ToastStyle
+import common.libs.views.ToastTheme
 import common.libs.views.TypeToast
 import common.libs.views.showError
 import common.libs.views.showNone
@@ -27,12 +29,14 @@ fun Activity.toastMess(
 	mess: String,
 	typeToast: TypeToast,
 	duration: Long = Duration.SHORT,
+    style: ToastStyle = ToastStyle.VERTICAL,
+    theme: ToastTheme = ToastTheme.SOFT,
 ) {
     when (typeToast) {
-        TypeToast.SUCCESS -> showSuccess(mess, duration)
-        TypeToast.ERROR -> showError(mess, duration)
-        TypeToast.WARNING -> showWarning(mess, duration)
-        TypeToast.NONE -> showNone(mess, duration)
+        TypeToast.SUCCESS -> showSuccess(mess, duration, style, theme)
+        TypeToast.ERROR -> showError(mess, duration, style, theme)
+        TypeToast.WARNING -> showWarning(mess, duration, style, theme)
+        TypeToast.NONE -> showNone(mess, duration, style, theme)
     }
 }
 
