@@ -64,6 +64,11 @@ fun openAppSettingsWifi(resultLauncher: ActivityResultLauncher<Intent>) {
 	resultLauncher.launch(intent)
 }
 
+fun Context.openAppSettingsWifi() {
+	val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+	startActivity(intent)
+}
+
 @RequiresApi(Build.VERSION_CODES.Q)
 fun Context.openPanelNetwork() {
 	val intent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
