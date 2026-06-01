@@ -165,7 +165,7 @@
         <common.libs.customView.IndicatorManual
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:indicatorCount="4"
+            app:indicatorCount="3"
             app:indicatorSelectedDrawable="@drawable/indicator_2"
             app:indicatorSelectedIndex="2"
             app:indicatorSpacing="5dp"
