@@ -58,6 +58,8 @@ class IslandNavigationTabView(
     private lateinit var tabIconView: ImageView
 
     init {
+        orientation = HORIZONTAL
+        gravity = android.view.Gravity.CENTER
         initViews()
         initContent()
     }
@@ -135,7 +137,7 @@ class IslandNavigationTabView(
     }
 
     override fun setTabTitleSize(textSize: Float) {
-        tabTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+        tabTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
     }
 
     override fun getTabTitle(): String = tabTitle
@@ -151,13 +153,13 @@ class IslandNavigationTabView(
 
     override fun setTabTitleActiveColor(color: Int) {
         tabTitleActiveColor = color
-        if (!isTabSelected) {
+        if (isTabSelected) {
             tabTitleTextView.setTextColor(color)
         }
     }
 
     override fun setTabTitleInactiveColor(color: Int) {
-        tabTitleActiveColor = color
+        tabTitleInactiveColor = color
         if (!isTabSelected) {
             tabTitleTextView.setTextColor(color)
         }
@@ -198,13 +200,28 @@ class IslandNavigationTabView(
             if (hasValue(R.styleable.IslandNavigationTabView_tabTitleSize)) {
                 val titleSizePx = getDimension(
                     R.styleable.IslandNavigationTabView_tabTitleSize,
-                    tabTitleTextView.textSize // giá trị mặc định
+                    -1f
                 )
-                setTabTitleSize(titleSizePx)
+                if (titleSizePx != -1f) {
+                    setTabTitleSize(titleSizePx)
+                }
+            } else {
+                // Default size if not specified, e.g., 12sp
+                tabTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             }
 
             if (hasValue(R.styleable.IslandNavigationTabView_tabIcon)) {
                 setTabIcon(getDrawable(R.styleable.IslandNavigationTabView_tabIcon))
+            }
+
+            if (hasValue(R.styleable.IslandNavigationTabView_tabIconSize)) {
+                val size = getDimensionPixelSize(R.styleable.IslandNavigationTabView_tabIconSize, -1)
+                if (size != -1) {
+                    tabIconView.layoutParams = tabIconView.layoutParams.apply {
+                        width = size
+                        height = size
+                    }
+                }
             }
 
             if (hasValue(R.styleable.IslandNavigationTabView_tabBackground)) {
@@ -251,6 +268,8 @@ class IslandNavigationTabView(
             tabContainer = this@IslandNavigationTabView
             tabTitleTextView = findViewById(R.id.bottombar_tab_textview)
             tabTitleTextView.setTextColor(tabTitleInactiveColor)
+            tabTitleTextView.maxLines = 1
+            tabTitleTextView.ellipsize = android.text.TextUtils.TruncateAt.END
             tabIconView = findViewById(R.id.bottombar_tab_icon_imageview)
         }
     }

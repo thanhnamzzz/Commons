@@ -110,6 +110,7 @@
         <attr name="tabTitleActiveColor" format="reference|color" />
         <attr name="tabTitleInactiveColor" format="reference|color" />
         <attr name="tabCustomPadding" format="dimension|reference" />
+        <attr name="tabIconSize" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="TransitionButton">

@@ -210,9 +210,11 @@
             android:layout_height="wrap_content"
             app:tabBackground="@drawable/bg_tab_bottom"
             app:tabIcon="@drawable/icon_explore"
+            app:tabIconSize="40dp"
             app:tabTitle="Explore"
             app:tabTitleActiveColor="@color/white"
-            app:tabTitleInactiveColor="#A7A8AF" />
+            app:tabTitleInactiveColor="#A7A8AF"
+            app:tabTitleSize="20sp" />
 
         <common.libs.navigationBar.IslandNavigationTabView
             android:id="@+id/tab_setting"

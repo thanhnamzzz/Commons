@@ -187,8 +187,8 @@ class IslandNavigationBarView(
         }
 
         constraintSet.createHorizontalChain(
-            id, ConstraintSet.LEFT,
-            id, ConstraintSet.RIGHT,
+            ConstraintSet.PARENT_ID, ConstraintSet.LEFT,
+            ConstraintSet.PARENT_ID, ConstraintSet.RIGHT,
             chainIdsList, chainWeightList,
             chainMode.constraintMode
         )
@@ -214,53 +214,59 @@ class IslandNavigationBarView(
 
     private fun reloadTabs() {
         navigationTabs.clear()
-        var index = 0
-
-        if (childCount > 5) {
+        val children = (0 until childCount).map { getChildAt(it) }
+        
+        if (children.size > 5) {
             throw IllegalArgumentException("Count of tabs of BottomBar must be at most 5")
         }
 
-        for (i in 0 until childCount) {
-            try {
-                navigationTabs.add(getChildAt(i) as IslandNavigationTabView)
-            } catch (_: ClassCastException) {
-                throw java.lang.ClassCastException("All children of IslandNavigationBar must be type of IslandNavigationTab")
+        children.forEachIndexed { index, child ->
+            if (child !is IslandNavigationTabView) {
+                throw ClassCastException("All children of IslandNavigationBar must be type of IslandNavigationTabView")
             }
-
-            val tab = navigationTabs[i]
-            tab.also {
-                it.setOnClickListener { view ->
-                    if (currentTab == it.tabPosition) {
-                        onTabSelectedListener?.onTabReselected(navigationTabs[currentTab].tabId)
-                    } else {
-                        TransitionManager.beginDelayedTransition(
-                            this@IslandNavigationBarView,
-                            TransitionSet()
-                                .addTransition(ChangeBounds().apply {
-                                    interpolator = tabToggleInterpolator
-                                    duration = toggleDuration.toLong()
-                                })
-                        )
-                        onTabSelectedListener?.onTabSelected(navigationTabs[it.tabPosition].let { tab ->
-                            tab.selectTab()
-                            tab.tabId
-                        })
-                        onTabSelectedListener?.onTabUnselected(navigationTabs[currentTab].let { tab ->
-                            tab.deselectTab(hiddenTitleTab = isHiddenTitleTab)
-                            tab.tabId
-                        })
-                    }
-                    currentTab = it.tabPosition
-                }
-                it.tabPosition = index++
-                tab.setInitialSelectedStatus(currentTab == it.tabPosition, isHiddenTitleTab)
-                if (currentTab == it.tabPosition) {
-                    onTabSelectedListener?.onTabSelected(tab.tabId)
-                }
+            
+            navigationTabs.add(child)
+            child.tabPosition = index
+            child.setInitialSelectedStatus(currentTab == index, isHiddenTitleTab)
+            
+            child.setOnClickListener {
+                handleTabClick(child)
+            }
+            
+            if (currentTab == index) {
+                onTabSelectedListener?.onTabSelected(child.tabId)
             }
         }
+        
         tabsCount = navigationTabs.size
         updateTabItems()
+    }
+
+    private fun handleTabClick(tab: IslandNavigationTabView) {
+        if (currentTab == tab.tabPosition) {
+            onTabSelectedListener?.onTabReselected(tab.tabId)
+            return
+        }
+
+        TransitionManager.beginDelayedTransition(
+            this,
+            TransitionSet().addTransition(
+                ChangeBounds().apply {
+                    interpolator = tabToggleInterpolator
+                    duration = toggleDuration.toLong()
+                }
+            )
+        )
+
+        val previousTab = navigationTabs[currentTab]
+        
+        previousTab.deselectTab(hiddenTitleTab = isHiddenTitleTab)
+        onTabSelectedListener?.onTabUnselected(previousTab.tabId)
+
+        tab.selectTab()
+        onTabSelectedListener?.onTabSelected(tab.tabId)
+
+        currentTab = tab.tabPosition
     }
 
     companion object {
