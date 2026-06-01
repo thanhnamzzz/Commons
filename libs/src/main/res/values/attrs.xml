@@ -117,4 +117,15 @@
         <attr name="loaderColor" format="string" />
         <attr name="errorColor" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="IndicatorManual">
+        <attr name="indicatorCount" format="integer" />
+        <attr name="indicatorSelectedColor" format="color" />
+        <attr name="indicatorUnselectedColor" format="color" />
+        <attr name="indicatorRadius" format="dimension" />
+        <attr name="indicatorSpacing" format="dimension" />
+        <attr name="indicatorSelectedIndex" format="integer" />
+        <attr name="indicatorSelectedDrawable" format="reference" />
+        <attr name="indicatorUnselectedDrawable" format="reference" />
+    </declare-styleable>
 </resources>

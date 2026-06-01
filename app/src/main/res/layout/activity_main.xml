@@ -162,6 +162,25 @@
             app:errorColor="#FF1B44"
             app:loaderColor="#000000" />
 
+        <common.libs.customView.IndicatorManual
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorCount="4"
+            app:indicatorSelectedDrawable="@drawable/indicator_2"
+            app:indicatorSelectedIndex="2"
+            app:indicatorSpacing="5dp"
+            app:indicatorUnselectedDrawable="@drawable/indicator_1" />
+
+        <common.libs.customView.IndicatorManual
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorCount="4"
+            app:indicatorRadius="5dp"
+            app:indicatorSelectedColor="@color/colorError"
+            app:indicatorSelectedIndex="2"
+            app:indicatorSpacing="5dp"
+            app:indicatorUnselectedColor="@color/black" />
+
     </LinearLayout>
 
     <common.libs.navigationBar.IslandNavigationBarView
