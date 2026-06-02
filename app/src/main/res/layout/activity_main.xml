@@ -9,185 +9,198 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_bar"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btn_check_network"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Check network" />
-
-        <Button
-            android:id="@+id/btn_blur_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Blur view" />
-
-        <Button
-            android:id="@+id/btn_animation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Animation View" />
-
-        <Button
-            android:id="@+id/btn_convert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Convert view" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/toast_style"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vertical" />
-
-            <Button
-                android:id="@+id/toast_theme"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/soft" />
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/toast_1"
+                android:id="@+id/btn_check_network"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1" />
+                android:text="Check network" />
 
             <Button
-                android:id="@+id/toast_2"
+                android:id="@+id/btn_blur_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2" />
+                android:text="Blur view" />
 
             <Button
-                android:id="@+id/toast_3"
+                android:id="@+id/btn_animation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3" />
+                android:text="Animation View" />
 
             <Button
-                android:id="@+id/toast_4"
+                android:id="@+id/btn_convert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4" />
-        </LinearLayout>
+                android:text="Convert view" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <common.libs.transitionButton.TransitionButton
-            android:id="@+id/btn_transition1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_30sdp"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:gravity="center"
-            android:paddingVertical="@dimen/_12sdp"
-            android:text="Transition Button 1"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:defaultColor="#aa003c"
-            app:loaderColor="@android:color/white" />
+                <Button
+                    android:id="@+id/toast_style"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vertical" />
 
-        <common.libs.transitionButton.TransitionButton
-            android:id="@+id/btn_transition2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:gravity="center"
-            android:paddingVertical="@dimen/_12sdp"
-            android:text="Transition Button 2"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:defaultColor="#3949AB"
-            app:loaderColor="@android:color/white" />
+                <Button
+                    android:id="@+id/toast_theme"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/soft" />
+            </LinearLayout>
 
-        <common.libs.transitionButton.TransitionButton
-            android:id="@+id/btn_transition3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:gravity="center"
-            android:paddingVertical="@dimen/_12sdp"
-            android:text="Transition Button 3"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:defaultColor="#B2DFDB"
-            app:errorColor="#FF1B44"
-            app:loaderColor="#000000" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <common.libs.customView.IndicatorManual
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:indicatorCount="3"
-            app:indicatorSelectedDrawable="@drawable/indicator_2"
-            app:indicatorSelectedIndex="2"
-            app:indicatorSpacing="5dp"
-            app:indicatorUnselectedDrawable="@drawable/indicator_1" />
+                <Button
+                    android:id="@+id/toast_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1" />
 
-        <common.libs.customView.IndicatorManual
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:indicatorCount="4"
-            app:indicatorRadius="5dp"
-            app:indicatorSelectedColor="@color/colorError"
-            app:indicatorSelectedIndex="2"
-            app:indicatorSpacing="5dp"
-            app:indicatorUnselectedColor="@color/black" />
+                <Button
+                    android:id="@+id/toast_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2" />
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/toast_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3" />
+
+                <Button
+                    android:id="@+id/toast_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4" />
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <common.libs.transitionButton.TransitionButton
+                android:id="@+id/btn_transition1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="center"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="Transition Button 1"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:defaultColor="#aa003c"
+                app:loaderColor="@android:color/white" />
+
+            <common.libs.transitionButton.TransitionButton
+                android:id="@+id/btn_transition2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="center"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="Transition Button 2"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:defaultColor="#3949AB"
+                app:loaderColor="@android:color/white" />
+
+            <common.libs.transitionButton.TransitionButton
+                android:id="@+id/btn_transition3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="center"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="Transition Button 3"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:defaultColor="#B2DFDB"
+                app:errorColor="#FF1B44"
+                app:loaderColor="#000000" />
+
+            <common.libs.customView.IndicatorManual
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorCount="3"
+                app:indicatorSelectedDrawable="@drawable/indicator_2"
+                app:indicatorSelectedIndex="2"
+                app:indicatorSpacing="5dp"
+                app:indicatorUnselectedDrawable="@drawable/indicator_1" />
+
+            <common.libs.customView.IndicatorManual
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorCount="4"
+                app:indicatorRadius="5dp"
+                app:indicatorSelectedColor="@color/colorError"
+                app:indicatorSelectedIndex="2"
+                app:indicatorSpacing="5dp"
+                app:indicatorUnselectedColor="@color/black" />
+
+            <Button
+                android:id="@+id/btn_bottom_sheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bottom Sheet" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <common.libs.navigationBar.IslandNavigationBarView
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:background="@color/white"
         app:barDistribution="spread"
         app:barHiddenTitleTab="true"

@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.MutableLiveData
 import common.commons.blurView.BlurActivity
+import common.commons.bottomSheet.BottomSheetActivity
 import common.commons.convert.ConvertActivity
 import common.commons.databinding.ActivityMainBinding
 import common.libs.SimpleActivity
@@ -203,6 +204,10 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 				style = toastStyle.value ?: ToastStyle.VERTICAL,
 				theme = toastTheme.value ?: ToastTheme.SOFT
 			)
+		}
+
+		binding.btnBottomSheet.setOnClickListener {
+			startActivity(Intent(this, BottomSheetActivity::class.java))
 		}
 	}
 
