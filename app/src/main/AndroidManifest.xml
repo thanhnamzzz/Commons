@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -10,6 +11,12 @@
         android:roundIcon="@mipmap/virgo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Commons">
+        <activity
+            android:name=".m3component.ListsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".m3component.M3ButtonActivity"
+            android:exported="false" />
         <activity
             android:name=".bottomSheet.BottomSheetActivity"
             android:exported="false" />

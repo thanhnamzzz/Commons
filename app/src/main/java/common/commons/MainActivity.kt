@@ -3,8 +3,10 @@ package common.commons
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +14,8 @@ import common.commons.blurView.BlurActivity
 import common.commons.bottomSheet.BottomSheetActivity
 import common.commons.convert.ConvertActivity
 import common.commons.databinding.ActivityMainBinding
+import common.commons.m3component.ListsActivity
+import common.commons.m3component.M3ButtonActivity
 import common.libs.SimpleActivity
 import common.libs.animationView.AnimationView
 import common.libs.animationView.Attention
@@ -45,7 +49,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 		setContentView(binding.root)
 		ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
 			val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-			v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+			v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
 			insets
 		}
 		window.hideSystemNavigationBar()
@@ -208,6 +212,36 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 
 		binding.btnBottomSheet.setOnClickListener {
 			startActivity(Intent(this, BottomSheetActivity::class.java))
+		}
+
+		binding.btnM3Component.setOnClickListener {
+			showPopupMenu(it, R.menu.menu_m3)
+		}
+	}
+
+	private var popupMenu: PopupMenu? = null
+	private fun showPopupMenu(targetView: View, menuResource: Int) {
+		if (popupMenu != null) return
+		popupMenu = PopupMenu(this, targetView).apply {
+			menuInflater.inflate(menuResource, menu)
+			setOnDismissListener {
+				popupMenu = null
+			}
+			setOnMenuItemClickListener {
+				when (it.itemId) {
+					R.id.button -> {
+						startActivity(Intent(this@MainActivity, M3ButtonActivity::class.java))
+					}
+
+					R.id.list -> {
+						startActivity(Intent(this@MainActivity, ListsActivity::class.java))
+					}
+
+					R.id.three -> {}
+				}
+				return@setOnMenuItemClickListener true
+			}
+			show()
 		}
 	}
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".m3component.M3ButtonActivity">
+
+    <com.google.android.material.button.MaterialButtonGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:spacing="@dimen/_2sdp"
+        app:overflowMode="menu">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Material3.DayNight"
+            app:icon="@drawable/ic_delete_forever_checkable_24px"
+            app:layout_overflowIcon="@drawable/ic_delete_forever_checkable_24px"
+            app:layout_overflowText="Delete icon" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Material3.DayNight"
+            app:icon="@drawable/ic_favorite_checkable_24px"
+            app:layout_overflowIcon="@drawable/ic_favorite_checkable_24px"
+            app:layout_overflowText="Delete icon" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:insetLeft="4dp"
+            android:insetRight="4dp"
+            android:text="Custom"
+            android:theme="@style/Theme.Material3.DayNight" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="Custom"
+            android:theme="@style/Theme.Material3.DayNight" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Material3.DayNight"
+            app:icon="@drawable/ic_home_checkable_24px"
+            app:layout_overflowIcon="@drawable/ic_home_checkable_24px"
+            app:layout_overflowText="Delete icon" />
+    </com.google.android.material.button.MaterialButtonGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:spacing="@dimen/_4sdp"
+        app:checkedButton="@+id/btn_private"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_private"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Private"
+            android:theme="@style/Theme.Material3.DayNight"
+            app:checkedIconVisible="true" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_team"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team"
+            android:theme="@style/Theme.Material3.DayNight"
+            app:checkedIconVisible="true" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_everyone"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Everyone"
+            android:theme="@style/Theme.Material3.DayNight"
+            app:checkedIconVisible="true" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</LinearLayout>

@@ -120,6 +120,7 @@ fun Context.openMoreApp(id: String) {
 	}
 }
 
+@Deprecated("Use `checkCurrentConnectivity()`")
 fun Context.isConnectedInternet(): Boolean {
 	val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 	//từ Android 6 trở lên API23
@@ -129,6 +130,14 @@ fun Context.isConnectedInternet(): Boolean {
 	return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
 			networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
 			networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+}
+
+fun Context.checkCurrentConnectivity(): Boolean {
+	val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+	val network = connectivityManager.activeNetwork ?: return false
+	val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+	return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+			capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
 }
 
 fun Activity.feedbackOnEmail(
