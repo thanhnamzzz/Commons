@@ -26,7 +26,8 @@ class GradientBackgroundButton @JvmOverloads constructor(
 	private var strokeWidth: Int = 0
 	private var strokeColor: Int = Color.BLACK
 	private var rippleColor: Int = ContextCompat.getColor(context, R.color.ripple_button)
-	private var orientationGradient: GradientDrawable.Orientation = GradientDrawable.Orientation.LEFT_RIGHT
+	private var orientationGradient: GradientDrawable.Orientation =
+		GradientDrawable.Orientation.LEFT_RIGHT
 
 	init {
 		attrs?.let {

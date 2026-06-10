@@ -9,6 +9,14 @@
     android:orientation="vertical"
     tools:context=".m3component.M3ButtonActivity">
 
+    <common.libs.customView.FlowLayout
+        android:id="@+id/layout_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:gravity="center_horizontal"
+        app:flFlow="true" />
+
     <com.google.android.material.button.MaterialButtonGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

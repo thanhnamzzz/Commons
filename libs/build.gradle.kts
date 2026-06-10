@@ -1,14 +1,15 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
 	alias(libs.plugins.android.library)
-	alias(libs.plugins.kotlin.android)
 	`maven-publish`
 }
 
 android {
 	namespace = "common.libs"
-	compileSdk = 36
+	compileSdk {
+		version = release(36) {
+			minorApiLevel = 1
+		}
+	}
 
 	defaultConfig {
 		minSdk = 23
@@ -29,11 +30,6 @@ android {
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17
-	}
-	kotlin {
-		compilerOptions {
-			jvmTarget.set(JvmTarget.JVM_17)
-		}
 	}
 	publishing {
 		singleVariant("release")

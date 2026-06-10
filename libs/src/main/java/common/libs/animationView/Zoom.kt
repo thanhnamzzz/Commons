@@ -7,136 +7,104 @@ import android.animation.ObjectAnimator
 import android.view.View
 import android.view.ViewGroup
 
-class Zoom {
-	fun In(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1 = ObjectAnimator.ofFloat(view, "scaleX", 0.45f, 1f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleY", 0.45f, 1f)
-		val object3 = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-
-		animatorSet.playTogether(object1, object2, object3)
-		return animatorSet
+object Zoom {
+	fun zoomIn(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 0.45f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.45f, 1f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f)
+		)
 	}
 
-	fun InDown(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun zoomInDown(view: View): AnimatorSet = AnimatorSet().apply {
 		val bottom = -view.bottom.toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "scaleX", 0.1f, 0.475f, 1f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleY", 0.1f, 0.475f, 1f)
-		val object3 = ObjectAnimator.ofFloat(view, "translationY", bottom, 60f, 0f)
-		val object4 = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, bottom, 60f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f)
+		)
 	}
 
-	fun InLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun zoomInLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val right = -view.right.toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "scaleX", 0.1f, 0.475f, 1f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleY", 0.1f, 0.475f, 1f)
-		val object3 = ObjectAnimator.ofFloat(view, "translationX", right, 48f, 0f)
-		val object4 = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, right, 48f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f)
+		)
 	}
 
-	fun InRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun zoomInRight(view: View): AnimatorSet = AnimatorSet().apply {
 		val width = -view.width.toFloat()
 		val right = -view.paddingRight.toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "scaleX", 0.1f, 0.475f, 1f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleY", 0.1f, 0.475f, 1f)
-		val object3 = ObjectAnimator.ofFloat(view, "translationX", width + right, -48f, 0f)
-		val object4 = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, width + right, -48f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f)
+		)
 	}
 
-	fun InUp(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val parent = view.parent as ViewGroup
-		val distance = (parent.height - view.top).toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleX", 0.1f, 0.475f, 1f)
-		val object3 = ObjectAnimator.ofFloat(view, "scaleY", 0.1f, 0.475f, 1f)
-		val object4 = ObjectAnimator.ofFloat(view, "translationY", distance, -60f, 0f)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+	fun zoomInUp(view: View): AnimatorSet = AnimatorSet().apply {
+		val parent = view.parent as? ViewGroup
+		val distance = parent?.let { (it.height - view.top).toFloat() } ?: 0f
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.1f, 0.475f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, distance, -60f, 0f)
+		)
 	}
 
-	/*	Out	 */
-	fun Out(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f, 0f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.3f, 0f)
-		val object3 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.3f, 0f)
-
-		animatorSet.playTogether(object1, object2, object3)
-		return animatorSet
+	fun zoomOut(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f, 0f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.3f, 0f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.3f, 0f)
+		)
 	}
 
-	fun OutDown(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val parent = view.parent as ViewGroup
-		val distance = (parent.height - view.top).toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 1f, 1f, 0f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.475f, 0.1f)
-		val object3 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.475f, 0.1f)
-		val object4 = ObjectAnimator.ofFloat(view, "translationY", 0f, -60f, distance)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+	fun zoomOutDown(view: View): AnimatorSet = AnimatorSet().apply {
+		val parent = view.parent as? ViewGroup
+		val distance = parent?.let { (it.height - view.top).toFloat() } ?: 0f
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f, -60f, distance)
+		)
 	}
 
-
-	fun OutLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun zoomOutLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val right = -view.right.toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 1f, 1f, 0f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.475f, 0.1f)
-		val object3 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.475f, 0.1f)
-		val object4 = ObjectAnimator.ofFloat(view, "translationX", 0f, 42f, right)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0f, 42f, right)
+		)
 	}
 
-	fun OutRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val parent = view.parent as ViewGroup
-		val distance = (parent.width - parent.left).toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 1f, 1f, 0f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.475f, 0.1f)
-		val object3 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.475f, 0.1f)
-		val object4 = ObjectAnimator.ofFloat(view, "translationX", 0f, -42f, distance)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+	fun zoomOutRight(view: View): AnimatorSet = AnimatorSet().apply {
+		val parent = view.parent as? ViewGroup
+		val distance = parent?.let { (it.width - it.left).toFloat() } ?: 0f
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0f, -42f, distance)
+		)
 	}
 
-	fun OutUp(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun zoomOutUp(view: View): AnimatorSet = AnimatorSet().apply {
 		val bottom = -view.bottom.toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 1f, 1f, 0f)
-		val object2 = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.475f, 0.1f)
-		val object3 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.475f, 0.1f)
-		val object4 = ObjectAnimator.ofFloat(view, "translationY", 0f, 60f, bottom)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.475f, 0.1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f, 60f, bottom)
+		)
 	}
 }

@@ -6,65 +6,46 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
 
-class Bounce {
-	fun In(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleX", 0.3f, 1.05f, 0.9f, 1f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleY", 0.3f, 1.05f, 0.9f, 1f)
-
-		animatorSet.playTogether(object1, object2, object3)
-		return animatorSet
+object Bounce {
+	fun bounceIn(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_X, 0.3f, 1.05f, 0.9f, 1f),
+			ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.3f, 1.05f, 0.9f, 1f)
+		)
 	}
 
-	fun InLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun bounceInLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val width = -view.width.toFloat()
-
-		val object1: ObjectAnimator =
-			ObjectAnimator.ofFloat(view, "translationX", width, 30f, -10f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f, 1f)
-
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, width, 30f, -10f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f, 1f)
+		)
 	}
 
-	fun InRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun bounceInRight(view: View): AnimatorSet = AnimatorSet().apply {
+		val measuredWidth = -view.measuredWidth.toFloat()
 		val width = -view.width.toFloat()
-		val measured_width = -view.measuredWidth.toFloat()
-
-		val object1: ObjectAnimator =
-			ObjectAnimator.ofFloat(view, "translationX", measured_width + width, -30f, 10f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f, 1f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		// Giữ nguyên logic cũ: measured_width + width
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, measuredWidth + width, -30f, 10f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f, 1f)
+		)
 	}
 
-	fun InUp(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val measured_height = view.measuredHeight.toFloat()
-
-		val object1: ObjectAnimator =
-			ObjectAnimator.ofFloat(view, "translationY", measured_height, -30f, 10f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f, 1f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+	fun bounceInUp(view: View): AnimatorSet = AnimatorSet().apply {
+		val measuredHeight = view.measuredHeight.toFloat()
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, measuredHeight, -30f, 10f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f, 1f)
+		)
 	}
 
-	fun InDown(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun bounceInDown(view: View): AnimatorSet = AnimatorSet().apply {
 		val height = -view.height.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f, 1f, 1f)
-		val object2: ObjectAnimator =
-			ObjectAnimator.ofFloat(view, "translationY", height, 30f, -10f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f, 1f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, height, 30f, -10f, 0f)
+		)
 	}
 }

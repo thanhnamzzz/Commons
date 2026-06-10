@@ -6,45 +6,32 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
 
-class Flip {
-	fun InX(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0.25f, 0.5f, 0.75f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotationX", 90f, -15f, 15f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+object Flip {
+	fun flipInX(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0.25f, 0.5f, 0.75f, 1f),
+			ObjectAnimator.ofFloat(view, View.ROTATION_X, 90f, -15f, 15f, 0f)
+		)
 	}
 
-	fun InY(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0.25f, 0.5f, 0.75f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotationY", 90f, -15f, 15f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+	fun flipInY(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0.25f, 0.5f, 0.75f, 1f),
+			ObjectAnimator.ofFloat(view, View.ROTATION_Y, 90f, -15f, 15f, 0f)
+		)
 	}
 
-	fun OutX(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotationX", 0f, 90f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+	fun flipOutX(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION_X, 0f, 90f)
+		)
 	}
 
-	fun OutY(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotationY", 0f, 90f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+	fun flipOutY(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION_Y, 0f, 90f)
+		)
 	}
-
 }

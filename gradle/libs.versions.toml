@@ -1,6 +1,5 @@
 [versions]
-agp = "8.13.0"
-kotlin = "2.3.20"
+agp = "9.2.1"
 coreKtx = "1.18.0"
 appcompat = "1.7.1"
 material = "1.14.0"
@@ -20,6 +19,5 @@ androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", ve
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 

@@ -6,116 +6,80 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
 
-class Fade {
-	fun In(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-
-		animatorSet.playTogether(object1)
-		return animatorSet
+object Fade {
+	fun fadeIn(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f)
+		)
 	}
 
-	fun InLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeInLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val width = -view.width.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", width / 4f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, width / 4f, 0f)
+		)
 	}
 
-	fun InRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeInRight(view: View): AnimatorSet = AnimatorSet().apply {
 		val width = view.width.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", width / 4f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, width / 4f, 0f)
+		)
 	}
 
-	fun InUp(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeInUp(view: View): AnimatorSet = AnimatorSet().apply {
 		val height = view.height.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationY", height / 4f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, height / 4f, 0f)
+		)
 	}
 
-	fun InDown(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeInDown(view: View): AnimatorSet = AnimatorSet().apply {
 		val height = -view.height.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationY", height / 4f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, height / 4f, 0f)
+		)
 	}
 
-	/*
-	Out
-	 */
-
-	fun Out(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-
-		animatorSet.playTogether(object1)
-		return animatorSet
+	fun fadeOut(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f)
+		)
 	}
 
-	fun OutLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeOutLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val width = -view.width.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, width / 4f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0f, width / 4f)
+		)
 	}
 
-	fun OutRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeOutRight(view: View): AnimatorSet = AnimatorSet().apply {
 		val width = view.width.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", width / 4f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0f, width / 4f)
+		)
 	}
 
-	fun OutUp(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeOutUp(view: View): AnimatorSet = AnimatorSet().apply {
 		val height = view.height.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationY", 0f, height / 4f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f, height / 4f)
+		)
 	}
 
-	fun OutDown(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun fadeOutDown(view: View): AnimatorSet = AnimatorSet().apply {
 		val height = -view.height.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationY", 0f, height / 4f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f, height / 4f)
+		)
 	}
-
-
 }

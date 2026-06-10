@@ -7,57 +7,99 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.ViewGroup
 import androidx.core.content.withStyledAttributes
-import kotlin.math.max
-import kotlin.math.min
 import androidx.core.view.isGone
 import common.libs.R
-import kotlin.collections.indices
-import kotlin.collections.isNotEmpty
-import kotlin.ranges.until
-import kotlin.run
+import kotlin.math.max
+import kotlin.math.min
 
 class FlowLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
 	ViewGroup(context, attrs) {
-	private var mFlow = DEFAULT_FLOW
-	private var mChildSpacing = DEFAULT_CHILD_SPACING
-	private var mMinChildSpacing = DEFAULT_CHILD_SPACING
-	private var mChildSpacingForLastRow = DEFAULT_CHILD_SPACING_FOR_LAST_ROW
-	private var mRowSpacing = DEFAULT_ROW_SPACING
-	private var mAdjustedRowSpacing = DEFAULT_ROW_SPACING
-	private var mRtl = DEFAULT_RTL
-	private var mMaxRows = DEFAULT_MAX_ROWS
-	private var mGravity = UNSPECIFIED_GRAVITY
-	private var mRowVerticalGravity = ROW_VERTICAL_GRAVITY_AUTO
-	private var mExactMeasuredHeight = 0
 
-	private val mHorizontalSpacingForRow: MutableList<Float> = ArrayList()
-	private val mHeightForRow: MutableList<Int> = ArrayList()
-	private val mWidthForRow: MutableList<Int> = ArrayList()
-	private val mChildNumForRow: MutableList<Int> = ArrayList()
+	var isFlow: Boolean = DEFAULT_FLOW
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var childSpacing: Int = DEFAULT_CHILD_SPACING
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var minChildSpacing: Int = DEFAULT_CHILD_SPACING
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var childSpacingForLastRow: Int = DEFAULT_CHILD_SPACING_FOR_LAST_ROW
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var rowSpacing: Float = DEFAULT_ROW_SPACING
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var maxRows: Int = DEFAULT_MAX_ROWS
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var gravity: Int = UNSPECIFIED_GRAVITY
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var rowVerticalGravity: Int = ROW_VERTICAL_GRAVITY_AUTO
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	var isRtl: Boolean = DEFAULT_RTL
+		set(value) {
+			field = value
+			requestLayout()
+		}
+
+	private var adjustedRowSpacing = DEFAULT_ROW_SPACING
+	private var exactMeasuredHeight = 0
+
+	private val horizontalSpacingForRow = mutableListOf<Float>()
+	private val heightForRow = mutableListOf<Int>()
+	private val widthForRow = mutableListOf<Int>()
+	private val childNumForRow = mutableListOf<Int>()
 
 	init {
 		context.withStyledAttributes(attrs, R.styleable.FlowLayout, 0, 0) {
-			mFlow = getBoolean(R.styleable.FlowLayout_flFlow, DEFAULT_FLOW)
+			isFlow = getBoolean(R.styleable.FlowLayout_flFlow, DEFAULT_FLOW)
 
 			val defaultSpacing = dpToPx(DEFAULT_CHILD_SPACING.toFloat()).toInt()
-			mChildSpacing = getDimensionOrInt(R.styleable.FlowLayout_flChildSpacing, defaultSpacing)
-			mMinChildSpacing =
+			childSpacing = getDimensionOrInt(R.styleable.FlowLayout_flChildSpacing, defaultSpacing)
+			minChildSpacing =
 				getDimensionOrInt(R.styleable.FlowLayout_flMinChildSpacing, defaultSpacing)
 
-			mChildSpacingForLastRow = getDimensionOrInt(
+			childSpacingForLastRow = getDimensionOrInt(
 				R.styleable.FlowLayout_flChildSpacingForLastRow,
 				SPACING_UNDEFINED
 			)
 
-			mRowSpacing = getDimensionOrInt(
+			rowSpacing = getDimensionOrInt(
 				R.styleable.FlowLayout_flRowSpacing,
 				dpToPx(DEFAULT_ROW_SPACING).toInt()
 			).toFloat()
 
-			mMaxRows = getInt(R.styleable.FlowLayout_flMaxRows, DEFAULT_MAX_ROWS)
-			mRtl = getBoolean(R.styleable.FlowLayout_flRtl, DEFAULT_RTL)
-			mGravity = getInt(R.styleable.FlowLayout_android_gravity, UNSPECIFIED_GRAVITY)
-			mRowVerticalGravity =
+			maxRows = getInt(R.styleable.FlowLayout_flMaxRows, DEFAULT_MAX_ROWS)
+			isRtl = getBoolean(R.styleable.FlowLayout_flRtl, DEFAULT_RTL)
+			gravity = getInt(R.styleable.FlowLayout_android_gravity, UNSPECIFIED_GRAVITY)
+			rowVerticalGravity =
 				getInt(R.styleable.FlowLayout_flRowVerticalGravity, ROW_VERTICAL_GRAVITY_AUTO)
 		}
 	}
@@ -75,43 +117,36 @@ class FlowLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet
 	}
 
 	override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
 		val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 		val widthMode = MeasureSpec.getMode(widthMeasureSpec)
 		val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 		val heightMode = MeasureSpec.getMode(heightMeasureSpec)
 
-		mHorizontalSpacingForRow.clear()
-		mHeightForRow.clear()
-		mWidthForRow.clear()
-		mChildNumForRow.clear()
+		horizontalSpacingForRow.clear()
+		heightForRow.clear()
+		widthForRow.clear()
+		childNumForRow.clear()
 
 		var measuredHeight = 0
 		var measuredWidth = 0
-		val childCount = childCount
 		var rowWidth = 0
 		var maxChildHeightInRow = 0
 		var childNumInRow = 0
 		val rowSize = widthSize - paddingLeft - paddingRight
 		var rowTotalChildWidth = 0
-		val allowFlow = widthMode != MeasureSpec.UNSPECIFIED && mFlow
-		val childSpacing =
-			if (mChildSpacing == SPACING_AUTO && widthMode == MeasureSpec.UNSPECIFIED) 0
-			else mChildSpacing
+		val allowFlow = widthMode != MeasureSpec.UNSPECIFIED && isFlow
+
+		val actualChildSpacing =
+			if (childSpacing == SPACING_AUTO && widthMode == MeasureSpec.UNSPECIFIED) 0 else childSpacing
 		val tmpSpacing =
-			(if (childSpacing == SPACING_AUTO) mMinChildSpacing else childSpacing).toFloat()
+			if (actualChildSpacing == SPACING_AUTO) minChildSpacing else actualChildSpacing
 
 		for (i in 0 until childCount) {
 			val child = getChildAt(i)
-			if (child.isGone) {
-				continue
-			}
+			if (child.isGone) continue
 
-			val childParams = child.layoutParams
-			var horizontalMargin = 0
-			var verticalMargin = 0
-			(childParams as? MarginLayoutParams)?.run {
+			val lp = child.layoutParams as? MarginLayoutParams
+			if (lp != null) {
 				measureChildWithMargins(
 					child,
 					widthMeasureSpec,
@@ -119,410 +154,217 @@ class FlowLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet
 					heightMeasureSpec,
 					measuredHeight
 				)
-				horizontalMargin = leftMargin + rightMargin
-				verticalMargin = topMargin + bottomMargin
-			} ?: run {
+			} else {
 				measureChild(child, widthMeasureSpec, heightMeasureSpec)
 			}
 
-			val childWidth = child.measuredWidth + horizontalMargin
-			val childHeight = child.measuredHeight + verticalMargin
-			if (allowFlow && rowWidth + childWidth > rowSize) { // Need flow to next row
-				// Save parameters for current row
-				mHorizontalSpacingForRow.add(
-					getSpacingForRow(childSpacing, rowSize, rowTotalChildWidth, childNumInRow)
+			val childWidth = child.measuredWidth + (lp?.let { it.leftMargin + it.rightMargin } ?: 0)
+			val childHeight =
+				child.measuredHeight + (lp?.let { it.topMargin + it.bottomMargin } ?: 0)
+
+			if (allowFlow && rowWidth + childWidth > rowSize) {
+				horizontalSpacingForRow.add(
+					getSpacingForRow(
+						actualChildSpacing,
+						rowSize,
+						rowTotalChildWidth,
+						childNumInRow
+					)
 				)
-				mChildNumForRow.add(childNumInRow)
-				mHeightForRow.add(maxChildHeightInRow)
-				mWidthForRow.add(rowWidth - tmpSpacing.toInt())
-				if (mHorizontalSpacingForRow.size <= mMaxRows) {
+				childNumForRow.add(childNumInRow)
+				heightForRow.add(maxChildHeightInRow)
+				widthForRow.add(rowWidth - tmpSpacing)
+
+				if (horizontalSpacingForRow.size <= maxRows) {
 					measuredHeight += maxChildHeightInRow
 				}
-				measuredWidth = max(measuredWidth.toDouble(), rowWidth.toDouble()).toInt()
+				measuredWidth = max(measuredWidth, rowWidth)
 
-				// Place the child view to next row
 				childNumInRow = 1
-				rowWidth = childWidth + tmpSpacing.toInt()
+				rowWidth = childWidth + tmpSpacing
 				rowTotalChildWidth = childWidth
 				maxChildHeightInRow = childHeight
 			} else {
 				childNumInRow++
-				rowWidth = (rowWidth + (childWidth + tmpSpacing)).toInt()
+				rowWidth += childWidth + tmpSpacing
 				rowTotalChildWidth += childWidth
-				maxChildHeightInRow =
-					max(maxChildHeightInRow.toDouble(), childHeight.toDouble()).toInt()
+				maxChildHeightInRow = max(maxChildHeightInRow, childHeight)
 			}
 		}
 
 		// Measure remaining child views in the last row
-		if (mChildSpacingForLastRow == SPACING_ALIGN) {
-			// For SPACING_ALIGN, use the same spacing from the row above if there is more than one
-			// row.
-			if (mHorizontalSpacingForRow.isNotEmpty()) {
-				mHorizontalSpacingForRow.add(
-					mHorizontalSpacingForRow[mHorizontalSpacingForRow.size - 1]
-				)
-			} else {
-				mHorizontalSpacingForRow.add(
-					getSpacingForRow(childSpacing, rowSize, rowTotalChildWidth, childNumInRow)
-				)
-			}
-		} else if (mChildSpacingForLastRow != SPACING_UNDEFINED) {
-			// For SPACING_AUTO and specific DP values, apply them to the spacing strategy.
-			mHorizontalSpacingForRow.add(
-				getSpacingForRow(
-					mChildSpacingForLastRow,
-					rowSize,
-					rowTotalChildWidth,
-					childNumInRow
-				)
+		val lastRowSpacing = when (childSpacingForLastRow) {
+			SPACING_ALIGN -> if (horizontalSpacingForRow.isNotEmpty()) horizontalSpacingForRow.last()
+			else getSpacingForRow(actualChildSpacing, rowSize, rowTotalChildWidth, childNumInRow)
+
+			SPACING_UNDEFINED -> getSpacingForRow(
+				actualChildSpacing,
+				rowSize,
+				rowTotalChildWidth,
+				childNumInRow
 			)
-		} else {
-			// For SPACING_UNDEFINED, apply childSpacing to the spacing strategy for the last row.
-			mHorizontalSpacingForRow.add(
-				getSpacingForRow(childSpacing, rowSize, rowTotalChildWidth, childNumInRow)
+
+			else -> getSpacingForRow(
+				childSpacingForLastRow,
+				rowSize,
+				rowTotalChildWidth,
+				childNumInRow
 			)
 		}
 
-		mChildNumForRow.add(childNumInRow)
-		mHeightForRow.add(maxChildHeightInRow)
-		mWidthForRow.add(rowWidth - tmpSpacing.toInt())
-		if (mHorizontalSpacingForRow.size <= mMaxRows) {
+		horizontalSpacingForRow.add(lastRowSpacing)
+		childNumForRow.add(childNumInRow)
+		heightForRow.add(maxChildHeightInRow)
+		widthForRow.add(rowWidth - tmpSpacing)
+
+		if (horizontalSpacingForRow.size <= maxRows) {
 			measuredHeight += maxChildHeightInRow
 		}
-		measuredWidth = max(measuredWidth.toDouble(), rowWidth.toDouble()).toInt()
+		measuredWidth = max(measuredWidth, rowWidth)
 
-		measuredWidth = if (childSpacing == SPACING_AUTO) {
-			widthSize
-		} else if (widthMode == MeasureSpec.UNSPECIFIED) {
-			measuredWidth + paddingLeft + paddingRight
-		} else {
-			min(
-				(measuredWidth + paddingLeft + paddingRight).toDouble(),
-				widthSize.toDouble()
-			).toInt()
+		measuredWidth = when {
+			actualChildSpacing == SPACING_AUTO -> widthSize
+			widthMode == MeasureSpec.UNSPECIFIED -> measuredWidth + paddingLeft + paddingRight
+			else -> min(measuredWidth + paddingLeft + paddingRight, widthSize)
 		}
 
 		measuredHeight += paddingTop + paddingBottom
-		val rowNum =
-			min(mHorizontalSpacingForRow.size.toDouble(), mMaxRows.toDouble()).toInt()
-		val rowSpacing =
-			if (mRowSpacing == SPACING_AUTO.toFloat() && heightMode == MeasureSpec.UNSPECIFIED)
-				0f
-			else
-				mRowSpacing
-		if (rowSpacing == SPACING_AUTO.toFloat()) {
-			mAdjustedRowSpacing = if (rowNum > 1) {
-				((heightSize - measuredHeight) / (rowNum - 1)).toFloat()
-			} else {
-				0f
-			}
+		val rowNum = min(horizontalSpacingForRow.size, maxRows)
+		val actualRowSpacing =
+			if (rowSpacing == SPACING_AUTO.toFloat() && heightMode == MeasureSpec.UNSPECIFIED) 0f else rowSpacing
+
+		if (actualRowSpacing == SPACING_AUTO.toFloat()) {
+			adjustedRowSpacing =
+				if (rowNum > 1) (heightSize - measuredHeight).toFloat() / (rowNum - 1) else 0f
 			measuredHeight = heightSize
 		} else {
-			mAdjustedRowSpacing = rowSpacing
+			adjustedRowSpacing = actualRowSpacing
 			if (rowNum > 1) {
-				measuredHeight = if (heightMode == MeasureSpec.UNSPECIFIED)
-					((measuredHeight + mAdjustedRowSpacing * (rowNum - 1)).toInt())
-				else
-					(min(
-						(measuredHeight + mAdjustedRowSpacing * (rowNum - 1)).toInt().toDouble(),
-						heightSize.toDouble()
-					).toInt())
+				val totalSpacing = (adjustedRowSpacing * (rowNum - 1)).toInt()
+				measuredHeight =
+					if (heightMode == MeasureSpec.UNSPECIFIED) measuredHeight + totalSpacing
+					else min(measuredHeight + totalSpacing, heightSize)
 			}
 		}
 
-		mExactMeasuredHeight = measuredHeight
-
-		measuredWidth = if (widthMode == MeasureSpec.EXACTLY) widthSize else measuredWidth
-		measuredHeight = if (heightMode == MeasureSpec.EXACTLY) heightSize else measuredHeight
-
-		setMeasuredDimension(measuredWidth, measuredHeight)
+		exactMeasuredHeight = measuredHeight
+		setMeasuredDimension(
+			if (widthMode == MeasureSpec.EXACTLY) widthSize else measuredWidth,
+			if (heightMode == MeasureSpec.EXACTLY) heightSize else measuredHeight
+		)
 	}
 
 	override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-		val paddingLeft = paddingLeft
-		val paddingRight = paddingRight
-		val paddingTop = paddingTop
-		val paddingBottom = paddingBottom
-
-		var x = if (mRtl) (width - paddingRight) else paddingLeft
+		val isLayoutRtl = layoutDirection == LAYOUT_DIRECTION_RTL || isRtl
+		var x = if (isLayoutRtl) width - paddingRight else paddingLeft
 		var y = paddingTop
 
-		val verticalGravity = mGravity and Gravity.VERTICAL_GRAVITY_MASK
-		val horizontalGravity = mGravity and Gravity.HORIZONTAL_GRAVITY_MASK
+		val vGravity = gravity and Gravity.VERTICAL_GRAVITY_MASK
+		val hGravity = gravity and Gravity.HORIZONTAL_GRAVITY_MASK
 
-		when (verticalGravity) {
-			Gravity.CENTER_VERTICAL -> {
-				val offset = (b - t - paddingTop - paddingBottom - mExactMeasuredHeight) / 2
-				y += offset
-			}
-
-			Gravity.BOTTOM -> {
-				val offset = b - t - paddingTop - paddingBottom - mExactMeasuredHeight
-				y += offset
-			}
-
-			else -> {}
+		when (vGravity) {
+			Gravity.CENTER_VERTICAL -> y += (b - t - paddingTop - paddingBottom - exactMeasuredHeight) / 2
+			Gravity.BOTTOM -> y += b - t - paddingTop - paddingBottom - exactMeasuredHeight
 		}
 
-		val horizontalPadding = paddingLeft + paddingRight
 		val layoutWidth = r - l
-		x += getHorizontalGravityOffsetForRow(horizontalGravity, layoutWidth, horizontalPadding, 0)
+		val hPadding = paddingLeft + paddingRight
+		x += getHorizontalGravityOffsetForRow(hGravity, layoutWidth, hPadding, 0)
 
-		val verticalRowGravity = mRowVerticalGravity and Gravity.VERTICAL_GRAVITY_MASK
-
-		val rowCount = mChildNumForRow.size
+		val vRowGravity = rowVerticalGravity and Gravity.VERTICAL_GRAVITY_MASK
+		val rowCount = childNumForRow.size
 		var childIdx = 0
-		for (row in 0 until min(rowCount.toDouble(), mMaxRows.toDouble()).toInt()) {
-			val childNum = mChildNumForRow[row]
-			val rowHeight = mHeightForRow[row]
-			val spacing = mHorizontalSpacingForRow[row]
+		val maxVisibleRows = min(rowCount, maxRows)
+
+		for (row in 0 until maxVisibleRows) {
+			val childNum = childNumForRow[row]
+			val rowHeight = heightForRow[row]
+			val spacing = horizontalSpacingForRow[row]
 			var i = 0
+
 			while (i < childNum && childIdx < childCount) {
 				val child = getChildAt(childIdx++)
-				if (child.isGone) {
-					continue
-				} else {
-					i++
+				if (child.isGone) continue
+				i++
+
+				val lp = child.layoutParams as? MarginLayoutParams
+				val mL = lp?.leftMargin ?: 0
+				val mT = lp?.topMargin ?: 0
+				val mR = lp?.rightMargin ?: 0
+				val mB = lp?.bottomMargin ?: 0
+
+				val cW = child.measuredWidth
+				val cH = child.measuredHeight
+
+				var childTop = y + mT
+				when (vRowGravity) {
+					Gravity.BOTTOM -> childTop = y + rowHeight - mB - cH
+					Gravity.CENTER_VERTICAL -> childTop = y + mT + (rowHeight - mT - mB - cH) / 2
 				}
 
-				val (marginLeft, marginTop, marginRight, marginBottom) =
-					(child.layoutParams as? MarginLayoutParams)?.run {
-						listOf(leftMargin, topMargin, rightMargin, bottomMargin)
-					} ?: listOf(0, 0, 0, 0)
-
-				val childWidth = child.measuredWidth
-				val childHeight = child.measuredHeight
-				var tt = y + marginTop
-				if (verticalRowGravity == Gravity.BOTTOM) {
-					tt = y + rowHeight - marginBottom - childHeight
-				} else if (verticalRowGravity == Gravity.CENTER_VERTICAL) {
-					tt = y + marginTop + (rowHeight - marginTop - marginBottom - childHeight) / 2
-				}
-				val bb = tt + childHeight
-				if (mRtl) {
-					val l1 = x - marginRight - childWidth
-					val r1 = x - marginRight
-					child.layout(l1, tt, r1, bb)
-					x = (x - (childWidth + spacing + marginLeft + marginRight)).toInt()
+				if (isLayoutRtl) {
+					child.layout(x - mR - cW, childTop, x - mR, childTop + cH)
+					x -= (cW + spacing + mL + mR).toInt()
 				} else {
-					val l2 = x + marginLeft
-					val r2 = x + marginLeft + childWidth
-					child.layout(l2, tt, r2, bb)
-					x = (x + (childWidth + spacing + marginLeft + marginRight)).toInt()
+					child.layout(x + mL, childTop, x + mL + cW, childTop + cH)
+					x += (cW + spacing + mL + mR).toInt()
 				}
 			}
-			x = if (mRtl) (width - paddingRight) else paddingLeft
-			x += getHorizontalGravityOffsetForRow(
-				horizontalGravity,
-				layoutWidth,
-				horizontalPadding,
-				row + 1
-			)
-			y = (y + (rowHeight + mAdjustedRowSpacing)).toInt()
+
+			x = if (isLayoutRtl) width - paddingRight else paddingLeft
+			x += getHorizontalGravityOffsetForRow(hGravity, layoutWidth, hPadding, row + 1)
+			y += (rowHeight + adjustedRowSpacing).toInt()
 		}
 
 		for (i in childIdx until childCount) {
 			val child = getChildAt(i)
-			if (child.visibility != GONE) {
-				child.layout(0, 0, 0, 0)
-			}
+			if (!child.isGone) child.layout(0, 0, 0, 0)
 		}
 	}
 
 	private fun getHorizontalGravityOffsetForRow(
-		horizontalGravity: Int,
+		hGravity: Int,
 		parentWidth: Int,
-		horizontalPadding: Int,
+		hPadding: Int,
 		row: Int
 	): Int {
-		if (mChildSpacing == SPACING_AUTO || row !in mWidthForRow.indices || row !in mChildNumForRow.indices || mChildNumForRow[row] <= 0) {
-			return 0
-		}
-		val availableWidth = parentWidth - horizontalPadding - mWidthForRow[row]
-		return when (horizontalGravity) {
+		if (childSpacing == SPACING_AUTO || row !in widthForRow.indices || (childNumForRow.getOrNull(
+				row
+			) ?: 0) <= 0
+		) return 0
+		val availableWidth = parentWidth - hPadding - widthForRow[row]
+		return when (hGravity) {
 			Gravity.CENTER_HORIZONTAL -> availableWidth / 2
 			Gravity.END -> availableWidth
 			else -> 0
 		}
 	}
 
-	override fun generateLayoutParams(p: LayoutParams): LayoutParams {
-		return MarginLayoutParams(p)
-	}
-
-	override fun generateLayoutParams(attrs: AttributeSet): LayoutParams {
-		return MarginLayoutParams(context, attrs)
-	}
-
-	var isFlow: Boolean
-		/**
-		 * Returns whether to allow child views flow to next row when there is no enough space.
-		 *
-		 * @return Whether to flow child views to next row when there is no enough space.
-		 */
-		get() = mFlow
-		/**
-		 * Sets whether to allow child views flow to next row when there is no enough space.
-		 *
-		 * @param flow true to allow flow. false to restrict all child views in one row.
-		 */
-		set(flow) {
-			mFlow = flow
-			requestLayout()
-		}
-
-	var childSpacing: Int
-		/**
-		 * Returns the horizontal spacing between child views.
-		 *
-		 * @return The spacing, either [FlowLayout.SPACING_AUTO], or a fixed size in pixels.
-		 */
-		get() = mChildSpacing
-		/**
-		 * Sets the horizontal spacing between child views.
-		 *
-		 * @param childSpacing The spacing, either [FlowLayout.SPACING_AUTO], or a fixed size in
-		 * pixels.
-		 */
-		set(childSpacing) {
-			mChildSpacing = childSpacing
-			requestLayout()
-		}
-
-	var childSpacingForLastRow: Int
-		/**
-		 * Returns the horizontal spacing between child views of the last row.
-		 *
-		 * @return The spacing, either [FlowLayout.SPACING_AUTO],
-		 * [FlowLayout.SPACING_ALIGN], or a fixed size in pixels
-		 */
-		get() = mChildSpacingForLastRow
-		/**
-		 * Sets the horizontal spacing between child views of the last row.
-		 *
-		 * @param childSpacingForLastRow The spacing, either [FlowLayout.SPACING_AUTO],
-		 * [FlowLayout.SPACING_ALIGN], or a fixed size in pixels
-		 */
-		set(childSpacingForLastRow) {
-			mChildSpacingForLastRow = childSpacingForLastRow
-			requestLayout()
-		}
-
-	var rowSpacing: Float
-		/**
-		 * Returns the vertical spacing between rows.
-		 *
-		 * @return The spacing, either [FlowLayout.SPACING_AUTO], or a fixed size in pixels.
-		 */
-		get() = mRowSpacing
-		/**
-		 * Sets the vertical spacing between rows in pixels. Use SPACING_AUTO to evenly place all rows
-		 * in vertical.
-		 *
-		 * @param rowSpacing The spacing, either [FlowLayout.SPACING_AUTO], or a fixed size in
-		 * pixels.
-		 */
-		set(rowSpacing) {
-			mRowSpacing = rowSpacing
-			requestLayout()
-		}
-
-	var maxRows: Int
-		/**
-		 * Returns the maximum number of rows of the FlowLayout.
-		 *
-		 * @return The maximum number of rows.
-		 */
-		get() = mMaxRows
-		/**
-		 * Sets the height of the FlowLayout to be at most maxRows tall.
-		 *
-		 * @param maxRows The maximum number of rows.
-		 */
-		set(maxRows) {
-			mMaxRows = maxRows
-			requestLayout()
-		}
-
-	fun setGravity(gravity: Int) {
-		if (mGravity != gravity) {
-			mGravity = gravity
-			requestLayout()
-		}
-	}
-
-	fun setRowVerticalGravity(rowVerticalGravity: Int) {
-		if (mRowVerticalGravity != rowVerticalGravity) {
-			mRowVerticalGravity = rowVerticalGravity
-			requestLayout()
-		}
-	}
-
-	var isRtl: Boolean
-		get() = mRtl
-		set(rtl) {
-			mRtl = rtl
-			requestLayout()
-		}
-
-	var minChildSpacing: Int
-		get() = mMinChildSpacing
-		set(minChildSpacing) {
-			this.mMinChildSpacing = minChildSpacing
-			requestLayout()
-		}
-
-	val rowsCount: Int
-		get() = mChildNumForRow.size
+	override fun generateLayoutParams(p: LayoutParams) = MarginLayoutParams(p)
+	override fun generateLayoutParams(attrs: AttributeSet) = MarginLayoutParams(context, attrs)
 
 	private fun getSpacingForRow(
-		spacingAttribute: Int,
+		spacingAttr: Int,
 		rowSize: Int,
 		usedSize: Int,
 		childNum: Int
 	): Float {
-		val spacing = if (spacingAttribute == SPACING_AUTO) {
-			if (childNum > 1) {
-				((rowSize - usedSize) / (childNum - 1)).toFloat()
-			} else {
-				0f
-			}
+		return if (spacingAttr == SPACING_AUTO) {
+			if (childNum > 1) (rowSize - usedSize).toFloat() / (childNum - 1) else 0f
 		} else {
-			spacingAttribute.toFloat()
+			spacingAttr.toFloat()
 		}
-		return spacing
 	}
 
-	private fun dpToPx(dp: Float): Float {
-		return TypedValue.applyDimension(
-			TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics
-		)
-	}
+	private fun dpToPx(dp: Float) =
+		TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
 
 	companion object {
-		/**
-		 * Special value for the child view spacing.
-		 * SPACING_AUTO means that the actual spacing is calculated according to the size of the
-		 * container and the number of the child views, so that the child views are placed evenly in
-		 * the container.
-		 */
-		const val SPACING_AUTO: Int = -65536
-
-		/**
-		 * Special value for the horizontal spacing of the child views in the last row
-		 * SPACING_ALIGN means that the horizontal spacing of the child views in the last row keeps
-		 * the same with the spacing used in the row above. If there is only one row, this value is
-		 * ignored and the spacing will be calculated according to childSpacing.
-		 */
-		const val SPACING_ALIGN: Int = -65537
-
+		const val SPACING_AUTO = -65536
+		const val SPACING_ALIGN = -65537
 		private const val SPACING_UNDEFINED = -65538
-
 		private const val UNSPECIFIED_GRAVITY = -1
-
 		private const val ROW_VERTICAL_GRAVITY_AUTO = -65536
-
 		private const val DEFAULT_FLOW = true
 		private const val DEFAULT_CHILD_SPACING = 0
 		private const val DEFAULT_CHILD_SPACING_FOR_LAST_ROW = SPACING_UNDEFINED

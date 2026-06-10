@@ -14,11 +14,12 @@ import common.commons.blurView.BlurActivity
 import common.commons.bottomSheet.BottomSheetActivity
 import common.commons.convert.ConvertActivity
 import common.commons.databinding.ActivityMainBinding
+import common.commons.fingerGesture.FingerGestureActivity
 import common.commons.m3component.ListsActivity
 import common.commons.m3component.M3ButtonActivity
 import common.libs.SimpleActivity
 import common.libs.animationView.AnimationView
-import common.libs.animationView.Attention
+import common.libs.animationView.Bounce
 import common.libs.extensions.PatternDate
 import common.libs.extensions.formatDate
 import common.libs.extensions.handlerFunction
@@ -38,8 +39,9 @@ import common.libs.views.TypeToast
 class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 	private val animationButton: AnimationView by lazy {
 		AnimationView().apply {
-			setAnimation(Attention().Ruberband(binding.btnAnimation))
-			isLoop = true
+//			setAnimation(Attention.rubberBand(binding.btnAnimation))
+			setAnimation(Bounce.bounceIn(binding.btnAnimation))
+			isLoop = false
 		}
 	}
 
@@ -216,6 +218,10 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 
 		binding.btnM3Component.setOnClickListener {
 			showPopupMenu(it, R.menu.menu_m3)
+		}
+
+		binding.btnFingerGestures.setOnClickListener {
+			startActivity(Intent(this, FingerGestureActivity::class.java))
 		}
 	}
 

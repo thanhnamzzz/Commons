@@ -187,17 +187,30 @@
                 app:indicatorSpacing="5dp"
                 app:indicatorUnselectedColor="@color/black" />
 
-            <Button
+            <common.libs.customView.GradientBackgroundButton
                 android:id="@+id/btn_bottom_sheet"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bottom Sheet" />
+                android:layout_height="@dimen/_35sdp"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_30sdp"
+                android:text="Bottom Sheet"
+                app:button_color1="#FFD6D6"
+                app:button_color2="@color/colorError"
+                app:cornerRadius="@dimen/_10sdp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
 
             <Button
                 android:id="@+id/btn_m3_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="M3 Component" />
+
+            <Button
+                android:id="@+id/btn_finger_gestures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finger Gesture" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

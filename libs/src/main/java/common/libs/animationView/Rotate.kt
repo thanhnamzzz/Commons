@@ -6,142 +6,106 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
 
-class Rotate {
-	fun In(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", -200f, 0f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
+object Rotate {
+	fun rotateIn(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, View.ROTATION, -200f, 0f)
+		)
 	}
 
-	fun InDownLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun rotateInDownLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val x = view.paddingLeft.toFloat()
 		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", -90f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ROTATION, -90f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
 	}
 
-	fun InDownRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun rotateInDownRight(view: View): AnimatorSet = AnimatorSet().apply {
 		val x = (view.width - view.paddingRight).toFloat()
 		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 90f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ROTATION, 90f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
 	}
 
-	fun InUpLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val x = view.paddingLeft.toFloat()
-		val y = view.height - view.paddingBottom.toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 90f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
-	}
-
-	fun InUpRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val x = (view.width - view.paddingRight).toFloat()
-		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", -90f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
-	}
-
-	/*
-	out
-	 */
-
-	fun Out(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 0f, 200f)
-
-		animatorSet.playTogether(object1, object2)
-		return animatorSet
-	}
-
-	fun OutDownLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun rotateInUpLeft(view: View): AnimatorSet = AnimatorSet().apply {
 		val x = view.paddingLeft.toFloat()
 		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 0f, 90f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ROTATION, 90f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
 	}
 
-
-	fun OutDownRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun rotateInUpRight(view: View): AnimatorSet = AnimatorSet().apply {
 		val x = (view.width - view.paddingRight).toFloat()
 		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 0f, -90f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ROTATION, -90f, 0f),
+			ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
 	}
 
-	fun OutUpLeft(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
-		val x = (view.paddingLeft).toFloat()
+	fun rotateOut(view: View): AnimatorSet = AnimatorSet().apply {
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION, 0f, 200f)
+		)
+	}
+
+	fun rotateOutDownLeft(view: View): AnimatorSet = AnimatorSet().apply {
+		val x = view.paddingLeft.toFloat()
 		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 0f, -90f)
-		val object3: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4: ObjectAnimator = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION, 0f, 90f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
 	}
 
-	fun OutUpRight(view: View): AnimatorSet {
-		val animatorSet = AnimatorSet()
+	fun rotateOutDownRight(view: View): AnimatorSet = AnimatorSet().apply {
 		val x = (view.width - view.paddingRight).toFloat()
 		val y = (view.height - view.paddingBottom).toFloat()
-
-		val object1 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-		val object2 = ObjectAnimator.ofFloat(view, "rotation", 0f, 90f)
-		val object3 = ObjectAnimator.ofFloat(view, "pivotX", x, x)
-		val object4 = ObjectAnimator.ofFloat(view, "pivotY", y, y)
-
-		animatorSet.playTogether(object1, object2, object3, object4)
-		return animatorSet
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION, 0f, -90f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
 	}
 
+	fun rotateOutUpLeft(view: View): AnimatorSet = AnimatorSet().apply {
+		val x = view.paddingLeft.toFloat()
+		val y = (view.height - view.paddingBottom).toFloat()
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION, 0f, -90f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
+	}
+
+	fun rotateOutUpRight(view: View): AnimatorSet = AnimatorSet().apply {
+		val x = (view.width - view.paddingRight).toFloat()
+		val y = (view.height - view.paddingBottom).toFloat()
+		playTogether(
+			ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f),
+			ObjectAnimator.ofFloat(view, View.ROTATION, 0f, 90f),
+			ObjectAnimator.ofFloat(view, "pivotX", x, x),
+			ObjectAnimator.ofFloat(view, "pivotY", y, y)
+		)
+	}
 }
