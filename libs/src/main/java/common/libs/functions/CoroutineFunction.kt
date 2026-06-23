@@ -9,6 +9,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Kiểm tra điều kiện định kỳ cho đến khi nó thỏa mãn.
@@ -24,7 +25,7 @@ fun CoroutineScope.checkConditionLoop(
 ) {
 	launch(Dispatchers.IO) {
 		while (!checkCondition()) {
-			delay(intervalMs)
+			delay(intervalMs.milliseconds)
 		}
 		withContext(Dispatchers.Main) {
 			onConditionMet()
@@ -42,7 +43,7 @@ fun CoroutineScope.checkConditionLoopJob(
 ): Job {
 	return launch(Dispatchers.IO) {
 		while (isActive && !checkCondition()) {
-			delay(intervalMs)
+			delay(intervalMs.milliseconds)
 		}
 		if (isActive) {
 			withContext(Dispatchers.Main) {
@@ -67,9 +68,9 @@ fun CoroutineScope.checkConditionLoopWithTimeout(
 ) {
 	require(timeoutMs >= 0) { "timeoutMs must not be negative" }
 	launch(Dispatchers.IO) {
-		val result: Boolean = withTimeoutOrNull(timeoutMs) {
+		val result: Boolean = withTimeoutOrNull(timeoutMs.milliseconds) {
 			while (!checkCondition()) {
-				delay(intervalMs)
+				delay(intervalMs.milliseconds)
 			}
 			return@withTimeoutOrNull true
 		} ?: false
@@ -91,9 +92,9 @@ fun CoroutineScope.checkConditionLoopWithTimeoutJob(
 ): Job {
 	require(timeoutMs >= 0) { "timeoutMs must not be negative" }
 	return launch(Dispatchers.IO) {
-		val result: Boolean = withTimeoutOrNull(timeoutMs) {
+		val result: Boolean = withTimeoutOrNull(timeoutMs.milliseconds) {
 			while (isActive && !checkCondition()) {
-				delay(intervalMs)
+				delay(intervalMs.milliseconds)
 			}
 			isActive
 		} ?: false

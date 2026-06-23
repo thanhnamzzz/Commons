@@ -18,6 +18,7 @@ import common.libs.views.showSuccess
 import common.libs.views.showWarning
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 fun reloadGallerySystem(context: Context, filePath: String) {
     MediaScannerConnection.scanFile(
@@ -54,7 +55,7 @@ fun LifecycleOwner.handlerFunction(
     callback: () -> Unit
 ) {
     lifecycleScope.launch {
-        delay(timeWait)
+        delay(timeWait.milliseconds)
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             callback()
         }
