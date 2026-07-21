@@ -11,14 +11,14 @@
     android:paddingEnd="@dimen/_16sdp"
     android:paddingBottom="@dimen/_6sdp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/ok"
         android:src="@drawable/icon_check" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/message_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

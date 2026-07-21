@@ -1,7 +1,6 @@
 package common.commons.m3component
 
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,13 +13,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.google.android.material.listitem.ListItemCardView
 import com.google.android.material.listitem.RevealableListItem
 import com.google.android.material.listitem.SwipeableListItem
 import common.commons.databinding.ActivityListsBinding
 import common.commons.databinding.CatListItemSwipeableViewholderBinding
 import common.libs.SimpleActivity
+import common.libs.views.MarginItemDecoration
 
 class ListsActivity : SimpleActivity<ActivityListsBinding>(ActivityListsBinding::inflate) {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,18 +177,4 @@ private class ListsAdapter(private val context: Context) :
 	}
 
 	override fun getItemCount(): Int = differ.currentList.size
-}
-
-class MarginItemDecoration(private val itemMargin: Int = 5) : ItemDecoration() {
-	override fun getItemOffsets(
-		outRect: Rect,
-		view: View,
-		parent: RecyclerView,
-		state: RecyclerView.State
-	) {
-		val position = parent.getChildAdapterPosition(view)
-		if (position != state.itemCount - 1) {
-			outRect.bottom = itemMargin
-		}
-	}
 }

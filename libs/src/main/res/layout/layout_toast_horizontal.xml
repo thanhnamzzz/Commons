@@ -11,7 +11,7 @@
     android:paddingEnd="@dimen/_16sdp"
     android:paddingBottom="@dimen/_10sdp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_toast"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
@@ -19,7 +19,7 @@
         android:contentDescription="@null"
         android:src="@drawable/icon_check" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/message_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
