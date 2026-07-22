@@ -32,14 +32,14 @@ fun Window.updateStatusBarForegroundColor(backgroundColor: Int) {
                 )
             }
         }
-//	} else if (isM23Plus()) {
-//		if (backgroundColor.getContrastColor() == DARK_GREY) {
-//			decorView.systemUiVisibility =
-//				decorView.systemUiVisibility.addBit(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
-//		} else {
-//			decorView.systemUiVisibility =
-//				decorView.systemUiVisibility.removeBit(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
-//		}
+	} else {
+		if (backgroundColor.getContrastColor() == DARK_GREY) {
+			decorView.systemUiVisibility =
+				decorView.systemUiVisibility.addBit(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+		} else {
+			decorView.systemUiVisibility =
+				decorView.systemUiVisibility.removeBit(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+		}
     }
 }
 
