@@ -41,16 +41,11 @@ fun Activity.toastMess(
     }
 }
 
-@Deprecated(
-    message = "Unsafe: this function does not respect lifecycle. " +
-            "Use handlerFunction(timeWait, LifecycleOwner, callback) instead.",
-    level = DeprecationLevel.WARNING
-)
-fun handlerFunction(timeWait: Long, callback: () -> Unit) {
+fun postDelayedHandler(timeWait: Long, callback: () -> Unit) {
     Handler(Looper.getMainLooper()).postDelayed({ callback() }, timeWait)
 }
 
-fun LifecycleOwner.handlerFunction(
+fun LifecycleOwner.postDelayed(
     timeWait: Long,
     callback: () -> Unit
 ) {

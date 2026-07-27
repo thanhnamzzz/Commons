@@ -22,7 +22,7 @@ import common.libs.animationView.AnimationView
 import common.libs.animationView.Bounce
 import common.libs.extensions.PatternDate
 import common.libs.extensions.formatDate
-import common.libs.extensions.handlerFunction
+import common.libs.extensions.postDelayed
 import common.libs.extensions.hideSystemNavigationBar
 import common.libs.extensions.isQ29Plus
 import common.libs.extensions.toastMess
@@ -130,7 +130,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 				Log.i("Namzzz", "MainActivity: btnTransition1 startAnimation DONE")
 			}
 
-			handlerFunction(2000) {
+			postDelayed(2000) {
 				binding.btnTransition1.stopAnimation(
 					TransitionButton.StopAnimationStyle.EXPAND,
 					listener1,
@@ -141,7 +141,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 		binding.btnTransition3.setOnClickListener {
 			binding.btnTransition3.startAnimation()
 
-			handlerFunction(2000) {
+			postDelayed(2000) {
 				binding.btnTransition3.stopAnimation(
 					TransitionButton.StopAnimationStyle.NULL,
 					listener3
@@ -151,7 +151,7 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 		binding.btnTransition2.setOnClickListener {
 			binding.btnTransition2.startAnimation()
 
-			handlerFunction(2000) {
+			postDelayed(2000) {
 				binding.btnTransition2.stopAnimation(
 					TransitionButton.StopAnimationStyle.SHAKE,
 					listener2
