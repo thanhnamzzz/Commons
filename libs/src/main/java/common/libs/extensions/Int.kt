@@ -5,7 +5,8 @@ import android.graphics.Color
 const val DARK_GREY = 0xFF333333.toInt()
 
 fun Int.addBit(bit: Int) = this or bit
-fun Int.removeBit(bit: Int) = addBit(bit) - bit
+//fun Int.removeBit(bit: Int) = addBit(bit) - bit
+fun Int.removeBit(bit: Int): Int = this and bit.inv()
 
 /** Tính toán độ tương phản màu */
 fun Int.getContrastColor(): Int {

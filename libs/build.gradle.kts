@@ -44,9 +44,11 @@ dependencies {
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)
 	implementation(libs.sdp.android)
+	implementation(libs.lottie)
 //	Glide
 //	implementation(libs.glide)
 	implementation(libs.androidx.constraintlayout)
+	implementation(libs.play.services.ads)
 }
 
 publishing.publications {

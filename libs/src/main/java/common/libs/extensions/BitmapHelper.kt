@@ -2,15 +2,12 @@ package common.libs.extensions
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Matrix
 import android.graphics.Rect
 import android.util.Log
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
 
 fun Bitmap?.saveBitmapToJpgCache(context: Context, fileName: String): String? {
     val cacheDir: File = context.cacheDir
@@ -46,22 +43,7 @@ fun Bitmap.saveBitmapToPng(folder: String, fileName: String): String? {
 }
 
 fun Bitmap.bitmapResize(newWidth: Int, newHeight: Int): Bitmap {
-    val width = this.width
-    val height = this.height
-    val scaleWidth = newWidth.toFloat() / width
-    val scaleHeight = newHeight.toFloat() / height
-    // CREATE A MATRIX FOR THE MANIPULATION
-    val matrix = Matrix()
-    // RESIZE THE BIT MAP
-    matrix.postScale(scaleWidth, scaleHeight)
-
-    // "RECREATE" THE NEW BITMAP
-    val newBitmap = Bitmap.createBitmap(this, 0, 0, width, height, matrix, false)
-    val bitmap = createBitmap(newWidth, newHeight)
-    val canvas = Canvas(bitmap)
-    canvas.drawColor(Color.TRANSPARENT)
-    canvas.drawBitmap(newBitmap, 0f, 0f, null)
-    return bitmap
+    return this.scale(newWidth, newHeight)
 }
 
 fun Bitmap.cropWithRect(cropRect: Rect): Bitmap {
