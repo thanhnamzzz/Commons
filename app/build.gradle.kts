@@ -48,4 +48,5 @@ dependencies {
 	implementation(libs.androidx.activity)
 	implementation(libs.androidx.constraintlayout)
 	implementation(project(":libs"))
+	implementation(libs.play.services.ads)
 }
