@@ -104,11 +104,11 @@ fun Activity.getBannerSizeWithScreen(): AdSize {
 	return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
 }
 
-//fun checkShowAds(): Boolean {
-//	val admob = AdmobManager
-//	return admob.getMaxClickAdsInDay() == 0
-//			|| (admob.getMaxClickAdsInDay() != 0 && !admob.isMaxClickAdsInDay())
-//}
+fun checkShowAds(): Boolean {
+	val helper = AdmobHelper
+	return helper.getMaxClickAdsInDay() == 0
+			|| (helper.getMaxClickAdsInDay() != 0 && !helper.isMaxClickAdsInDay())
+}
 
 fun <T> CancellableContinuation<T>.resumeIfActive(value: T) {
 	if (isActive) resume(value)

@@ -1,6 +1,5 @@
 package common.libs.admob
 
-import android.content.Context
 import android.os.Bundle
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
@@ -23,7 +22,6 @@ import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoa
 
 @WorkerThread
 fun loadAdNative(
-	context: Context,
 	idAdsNative: String,
 	onNativeAdLoaded: (NativeAd) -> Unit,
 	onNativeAdLoadFail: ((LoadAdError) -> Unit)? = null,
@@ -31,7 +29,7 @@ fun loadAdNative(
 ) {
 	val videoOptions = VideoOptions.Builder().setStartMuted(true).build()
 	val adOptions = NativeAdOptions.Builder().setVideoOptions(videoOptions).build()
-	val adLoader = AdLoader.Builder(context, idAdsNative)
+	val adLoader = AdLoader.Builder(AppContext.getContext(), idAdsNative)
 		.forNativeAd { nativeAd: NativeAd? ->
 			if (nativeAd != null) {
 				onNativeAdLoaded(nativeAd)
@@ -52,14 +50,13 @@ fun loadAdNative(
 
 @MainThread
 fun loadAdBanner(
-	context: Context,
 	idAdsBanner: String,
 	adSize: AdSize,
 	onBannerLoadFail: ((LoadAdError) -> Unit)? = null,
 	onBannerLoaded: ((AdView) -> Unit)? = null,
 	onBannerClicked: (() -> Unit)? = null
 ) {
-	val adViewBanner = AdView(context)
+	val adViewBanner = AdView(AppContext.getContext())
 	adViewBanner.apply {
 		setAdSize(adSize)
 		adUnitId = idAdsBanner
@@ -85,14 +82,13 @@ fun loadAdBanner(
 
 @MainThread
 fun loadAdCollapsibleBanner(
-	context: Context,
 	idAdsCollapsibleBanner: String,
 	adSize: AdSize,
 	onCollapsibleLoaded: ((AdView) -> Unit)? = null,
 	onCollapsibleLoadFail: ((LoadAdError) -> Unit)? = null,
 	onCollapsibleClicked: (() -> Unit)? = null,
 ) {
-	val adCollapsibleBanner = AdView(context)
+	val adCollapsibleBanner = AdView(AppContext.getContext())
 	adCollapsibleBanner.apply {
 		setAdSize(adSize)
 		adUnitId = idAdsCollapsibleBanner
@@ -123,7 +119,6 @@ fun loadAdCollapsibleBanner(
 
 @MainThread
 fun loadAdInterstitial(
-	context: Context,
 	idAdsInterstitial: String,
 	onInterLoadFail: ((LoadAdError) -> Unit)? = null,
 	onInterLoaded: ((InterstitialAd) -> Unit)? = null,
@@ -131,7 +126,7 @@ fun loadAdInterstitial(
 	val adRequest = AdRequest.Builder().build()
 
 	InterstitialAd.load(
-		context,
+		AppContext.getContext(),
 		idAdsInterstitial,
 		adRequest,
 		object : InterstitialAdLoadCallback() {
@@ -149,7 +144,6 @@ fun loadAdInterstitial(
 
 @MainThread
 fun loadAdReward(
-	context: Context,
 	idAdReward: String,
 	onRewardLoadFail: ((LoadAdError) -> Unit)? = null,
 	onRewardLoaded: ((RewardedAd) -> Unit)? = null,
@@ -157,7 +151,7 @@ fun loadAdReward(
 	val adRequest = AdRequest.Builder().build()
 
 	RewardedAd.load(
-		context,
+		AppContext.getContext(),
 		idAdReward,
 		adRequest,
 		object : RewardedAdLoadCallback() {
@@ -175,7 +169,6 @@ fun loadAdReward(
 
 @MainThread
 fun loadAdRewardInterstitial(
-	context: Context,
 	idAdRewardInterstitial: String,
 	onInterRewardLoadFail: ((LoadAdError) -> Unit)? = null,
 	onInterRewardLoaded: ((RewardedInterstitialAd) -> Unit)? = null,
@@ -183,7 +176,7 @@ fun loadAdRewardInterstitial(
 	val adRequest = AdRequest.Builder().build()
 
 	RewardedInterstitialAd.load(
-		context,
+		AppContext.getContext(),
 		idAdRewardInterstitial,
 		adRequest,
 		object : RewardedInterstitialAdLoadCallback() {
