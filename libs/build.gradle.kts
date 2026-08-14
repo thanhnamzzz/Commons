@@ -47,8 +47,6 @@ dependencies {
 	implementation(libs.lottie)
 //	Glide
 //	implementation(libs.glide)
-	implementation(libs.androidx.constraintlayout)
-	implementation(libs.play.services.ads)
 }
 
 publishing.publications {

@@ -4,10 +4,8 @@ coreKtx = "1.18.0"
 appcompat = "1.7.1"
 material = "1.14.0"
 activity = "1.13.0"
-constraintlayout = "2.2.1"
 sdpAndroid = "1.1.1"
 activityKtx = "1.13.0"
-playServicesAds = "25.4.0"
 lottie = "6.7.1"
 
 [libraries]
@@ -15,10 +13,8 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
 [plugins]
