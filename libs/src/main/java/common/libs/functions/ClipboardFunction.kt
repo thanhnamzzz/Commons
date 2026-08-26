@@ -5,22 +5,32 @@ import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
+import common.libs.extensions.isP28Plus
 
 fun Context.copyToClipboard(text: String) {
-    val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-    val clip = ClipData.newPlainText("Copy", text)
-    clipboard.setPrimaryClip(clip)
+	val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+	val clip = ClipData.newPlainText("Copy", text)
+	clipboard.setPrimaryClip(clip)
+}
+
+fun Context.clearClipboard() {
+	val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+	if (isP28Plus()) {
+		clipboard.clearPrimaryClip()
+	} else {
+		clipboard.setPrimaryClip(ClipData.newPlainText("", ""))
+	}
 }
 
 fun Context.getTextFromClipboard(): String {
-    val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-    if (clipboard.hasPrimaryClip()
-        && clipboard.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) == true
-    ) {
-        val item = clipboard.primaryClip?.getItemAt(0)
-        val text = item?.text
-        return (text ?: "").toString()
-    } else {
-        return ""
-    }
+	val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+	if (clipboard.hasPrimaryClip()
+		&& clipboard.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) == true
+	) {
+		val item = clipboard.primaryClip?.getItemAt(0)
+		val text = item?.text
+		return (text ?: "").toString()
+	} else {
+		return ""
+	}
 }
