@@ -6,9 +6,7 @@ plugins {
 android {
 	namespace = "common.libs"
 	compileSdk {
-		version = release(36) {
-			minorApiLevel = 1
-		}
+		version = release(37)
 	}
 
 	defaultConfig {
@@ -44,6 +42,7 @@ dependencies {
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)
 	implementation(libs.sdp.android)
+	implementation(libs.ssp.android)
 	implementation(libs.lottie)
 //	Glide
 //	implementation(libs.glide)

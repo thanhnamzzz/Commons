@@ -1,12 +1,13 @@
 [versions]
 agp = "9.2.1"
-coreKtx = "1.18.0"
-appcompat = "1.7.1"
+coreKtx = "1.19.0"
+appcompat = "1.8.0"
 material = "1.14.0"
 activity = "1.13.0"
 sdpAndroid = "1.1.1"
 activityKtx = "1.13.0"
 lottie = "6.7.1"
+sspAndroid = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -16,6 +17,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

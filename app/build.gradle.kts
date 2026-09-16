@@ -5,15 +5,13 @@ plugins {
 android {
 	namespace = "common.commons"
 	compileSdk {
-		version = release(36) {
-			minorApiLevel = 1
-		}
+		version = release(37)
 	}
 
 	defaultConfig {
 		applicationId = "common.commons"
 		minSdk = 23
-		targetSdk = 36
+		targetSdk = 37
 		versionCode = 1
 		versionName = "1.0"
 

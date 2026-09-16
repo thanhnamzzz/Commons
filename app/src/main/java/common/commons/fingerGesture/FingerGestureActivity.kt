@@ -7,7 +7,7 @@ import androidx.core.view.WindowInsetsCompat
 import common.commons.databinding.ActivityFingerGestureBinding
 import common.libs.SimpleActivity
 import common.libs.customView.fingerGesture.FingerGestures
-import common.libs.extensions.toastMess
+import common.libs.views.toastMess
 import common.libs.views.TypeToast
 
 class FingerGestureActivity : SimpleActivity<ActivityFingerGestureBinding>(

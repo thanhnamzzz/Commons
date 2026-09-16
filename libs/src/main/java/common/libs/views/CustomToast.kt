@@ -171,3 +171,18 @@ fun Activity.showNone(
 ) {
 	showCustomOverlayToast(TypeToast.NONE, message, duration, style, theme)
 }
+
+fun Activity.toastMess(
+	mess: String,
+	typeToast: TypeToast,
+	duration: Long = Duration.SHORT,
+	style: ToastStyle = ToastStyle.VERTICAL,
+	theme: ToastTheme = ToastTheme.SOFT,
+) {
+	when (typeToast) {
+		TypeToast.SUCCESS -> showSuccess(mess, duration, style, theme)
+		TypeToast.ERROR -> showError(mess, duration, style, theme)
+		TypeToast.WARNING -> showWarning(mess, duration, style, theme)
+		TypeToast.NONE -> showNone(mess, duration, style, theme)
+	}
+}

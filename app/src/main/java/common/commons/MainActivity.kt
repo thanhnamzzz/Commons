@@ -25,7 +25,7 @@ import common.libs.extensions.formatDate
 import common.libs.extensions.postDelayed
 import common.libs.extensions.hideSystemNavigationBar
 import common.libs.extensions.isQ29Plus
-import common.libs.extensions.toastMess
+import common.libs.views.toastMess
 import common.libs.functions.openAppSettingsWifi
 import common.libs.functions.openPanelNetwork
 import common.libs.functions.versionApp
