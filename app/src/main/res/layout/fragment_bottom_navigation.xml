@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".bottomNavigation.BottomNavigationFragment">
 
@@ -138,15 +138,16 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_rounded_card"
-        app:barElevation="6dp"
+        app:barElevation="@dimen/_3sdp"
         app:barPadding="8dp"
         app:indicatorAnimationMode="slideSpring"
-        app:indicatorSpringTension="1.3"
+        app:indicatorSpringTension="1.1"
         app:indicatorThinFactor="0.6"
         app:itemCornerRadius="14dp"
+        app:itemFontFamily="@font/montserrat_alternates_medium"
         app:itemIconSize="@dimen/_18sdp"
-        app:itemIconTitleSpacing="1dp"
-        app:itemSpacing="2dp"
+        app:itemIconTitleSpacing="@dimen/_2sdp"
+        app:itemSpacing="@dimen/_2sdp"
         app:itemUnselectedBackground="#0D000000" />
 
 </LinearLayout>

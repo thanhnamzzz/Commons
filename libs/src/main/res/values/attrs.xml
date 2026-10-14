@@ -129,7 +129,6 @@
         <attr name="indicatorSelectedDrawable" format="reference" />
         <attr name="indicatorUnselectedDrawable" format="reference" />
     </declare-styleable>
-
     <declare-styleable name="MyBottomNavigationView">
         <!-- Chế độ hiệu ứng chuyển đổi background: fade (mặc định), slideSpring, slideSmooth, none -->
         <attr name="indicatorAnimationMode" format="enum">
@@ -185,6 +184,9 @@
 
         <!-- Khoảng cách giữa Icon và Text Title (dp) -->
         <attr name="itemIconTitleSpacing" format="dimension" />
+
+        <!-- Font chữ tùy biến áp dụng chung cho tất cả các tab -->
+        <attr name="itemFontFamily" format="reference" />
 
         <!-- Độ nâng/Đổ bóng của thanh Bar (dp) -->
         <attr name="barElevation" format="dimension" />

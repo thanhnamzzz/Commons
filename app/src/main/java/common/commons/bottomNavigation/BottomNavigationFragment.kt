@@ -68,7 +68,8 @@ class BottomNavigationFragment : SimpleFragment<FragmentBottomNavigationBinding>
 				iconTintSelected = colorSelected,
 				iconTintUnselected = colorUnselected,
 				textColorSelected = colorSelected,
-				textColorUnselected = colorUnselected
+				textColorUnselected = colorUnselected,
+				textSizeSp = 11f
 			),
 			BottomBarItem(
 				id = 2,
@@ -78,7 +79,8 @@ class BottomNavigationFragment : SimpleFragment<FragmentBottomNavigationBinding>
 				iconTintSelected = colorSelected,
 				iconTintUnselected = colorUnselected,
 				textColorSelected = colorSelected,
-				textColorUnselected = colorUnselected
+				textColorUnselected = colorUnselected,
+				textSizeSp = 11f
 			),
 			BottomBarItem(
 				id = 3,
@@ -88,7 +90,8 @@ class BottomNavigationFragment : SimpleFragment<FragmentBottomNavigationBinding>
 				iconTintSelected = colorSelected,
 				iconTintUnselected = colorUnselected,
 				textColorSelected = colorSelected,
-				textColorUnselected = colorUnselected
+				textColorUnselected = colorUnselected,
+				textSizeSp = 11f
 			)
 		)
 
@@ -102,7 +105,8 @@ class BottomNavigationFragment : SimpleFragment<FragmentBottomNavigationBinding>
 					iconTintSelected = colorSelected,
 					iconTintUnselected = colorUnselected,
 					textColorSelected = colorSelected,
-					textColorUnselected = colorUnselected
+					textColorUnselected = colorUnselected,
+					textSizeSp = 11f
 				)
 			)
 		}

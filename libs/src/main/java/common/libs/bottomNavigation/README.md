@@ -166,6 +166,7 @@ myBottomNav.setupWithViewPager2(viewPager2)
 | `app:itemCornerRadiusUnselected` | `dimension` | `100dp` | Góc bo tròn riêng biệt khi item KHÔNG được chọn. |
 | `app:itemIconSize` | `dimension` | `24dp` | Kích thước icon (vuông). |
 | `app:itemIconTitleSpacing` | `dimension` | `4dp` | Khoảng cách dọc giữa Icon và Text Title. |
+| `app:itemFontFamily` | `reference` | `null` | Font chữ tùy biến áp dụng chung cho tất cả các tab (VD: `@font/roboto`). |
 | `app:barElevation` | `dimension` | `0dp` | Độ đổ bóng của toàn bộ thanh Bar. |
 
 ---
@@ -232,6 +233,10 @@ fun setBarPaddingDp(horizontalDp: Float, verticalDp: Float)
 fun setItemSelectedBackgroundColor(color: Int)
 fun setItemUnselectedBackgroundColor(color: Int)
 fun setBarBackgroundColor(color: Int)
+
+// Cài đặt Font chữ chung cho toàn bộ các tab
+fun setItemFontFamily(@FontRes fontRes: Int)
+fun setItemTypeface(typeface: Typeface?)
 ```
 
 ---

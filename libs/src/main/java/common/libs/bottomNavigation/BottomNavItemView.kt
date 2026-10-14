@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Outline
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -136,10 +137,12 @@ class BottomNavItemView @JvmOverloads constructor(
      * Gắn dữ liệu model vào view
      */
     fun bindItem(
-	    item: BottomBarItem,
-	    isSelected: Boolean,
-	    globalUnselectedDrawable: Drawable?,
-	    globalRadiusUnselected: Float
+        item: BottomBarItem,
+        isSelected: Boolean,
+        globalUnselectedDrawable: Drawable?,
+        globalRadiusUnselected: Float,
+        globalTypeface: Typeface? = null,
+        globalFontRes: Int? = null
     ) {
         this.currentItem = item
         this.isCurrentlySelected = isSelected
@@ -148,12 +151,19 @@ class BottomNavItemView @JvmOverloads constructor(
         tvTitle.text = item.title
         tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, item.textSizeSp)
 
-        // Cấu hình Font chữ
+        // Cấu hình Font chữ: Ưu tiên font của từng Item -> nếu không có thì dùng font cài đặt chung
         when {
             item.typeface != null -> tvTitle.typeface = item.typeface
             item.fontRes != null -> {
                 try {
                     tvTitle.typeface = ResourcesCompat.getFont(context, item.fontRes)
+                } catch (_: Exception) {
+                }
+            }
+            globalTypeface != null -> tvTitle.typeface = globalTypeface
+            globalFontRes != null && globalFontRes != 0 -> {
+                try {
+                    tvTitle.typeface = ResourcesCompat.getFont(context, globalFontRes)
                 } catch (_: Exception) {
                 }
             }
@@ -261,18 +271,24 @@ class BottomNavItemView @JvmOverloads constructor(
         }
 
         val finalDrawable = drawable.constantState?.newDrawable()?.mutate() ?: drawable
-        if (finalDrawable is GradientDrawable) {
-            finalDrawable.cornerRadius = radius
-            view.background = finalDrawable
-        } else if (finalDrawable is ColorDrawable) {
-            val gd = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                setColor(finalDrawable.color)
-                cornerRadius = radius
+        when (finalDrawable) {
+            is GradientDrawable -> {
+                finalDrawable.cornerRadius = radius
+                view.background = finalDrawable
             }
-            view.background = gd
-        } else {
-            view.background = finalDrawable
+
+            is ColorDrawable -> {
+                val gd = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    setColor(finalDrawable.color)
+                    cornerRadius = radius
+                }
+                view.background = gd
+            }
+
+            else -> {
+                view.background = finalDrawable
+            }
         }
 
         if (radius > 0f) {
