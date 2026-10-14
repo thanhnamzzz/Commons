@@ -212,6 +212,12 @@
                 android:layout_height="wrap_content"
                 android:text="Finger Gesture" />
 
+            <Button
+                android:id="@+id/btn_single_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Single Activity" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -129,4 +129,64 @@
         <attr name="indicatorSelectedDrawable" format="reference" />
         <attr name="indicatorUnselectedDrawable" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="MyBottomNavigationView">
+        <!-- Chế độ hiệu ứng chuyển đổi background: fade (mặc định), slideSpring, slideSmooth, none -->
+        <attr name="indicatorAnimationMode" format="enum">
+            <enum name="fade" value="0" />
+            <enum name="slideSpring" value="1" />
+            <enum name="slideSmooth" value="2" />
+            <enum name="none" value="3" />
+        </attr>
+
+        <!-- Thời gian chạy animation chuyển tab (ms) -->
+        <attr name="indicatorDuration" format="integer" />
+
+        <!-- Độ nảy vật lý (Spring/Overshoot Tension) cho chế độ slideSpring (mặc định 1.3) -->
+        <attr name="indicatorSpringTension" format="float" />
+
+        <!-- Hiệu ứng làm mỏng chiều cao background theo độ dài di chuyển và nở ra khi dừng lại -->
+        <attr name="indicatorThinOnMove" format="boolean" />
+        <attr name="indicatorThinFactor" format="float" />
+
+        <!-- Background / Lớp phủ cho item được chọn (dạng drawable hoặc color) -->
+        <attr name="itemSelectedBackground" format="reference|color" />
+
+        <!-- Background / Lớp phủ cho item KHÔNG được chọn (dạng drawable hoặc color) -->
+        <attr name="itemUnselectedBackground" format="reference|color" />
+
+        <!-- Góc bo tròn của lớp phủ khi item được chọn (dp) -->
+        <attr name="itemCornerRadiusSelected" format="dimension" />
+
+        <!-- Góc bo tròn của lớp phủ khi item không được chọn (dp) -->
+        <attr name="itemCornerRadiusUnselected" format="dimension" />
+
+        <!-- Góc bo tròn chung cho cả chọn và không chọn nếu không định nghĩa riêng (dp) -->
+        <attr name="itemCornerRadius" format="dimension" />
+
+        <!-- Khoảng cách riêng biệt giữa các Item liền kề (dp) -->
+        <attr name="itemSpacing" format="dimension" />
+
+        <!-- Padding đệm giữa viền ngoài của View cha (parent) với nội dung bên trong (dp) -->
+        <attr name="barPadding" format="dimension" />
+        <attr name="barPaddingHorizontal" format="dimension" />
+        <attr name="barPaddingVertical" format="dimension" />
+
+        <!-- Khoảng đệm thu nhỏ nội bộ của indicator bên trong ô item (dp, mặc định 0dp) -->
+        <attr name="indicatorPaddingHorizontal" format="dimension" />
+        <attr name="indicatorPaddingVertical" format="dimension" />
+
+        <!-- Tương thích ngược (alias cho indicatorPadding) -->
+        <attr name="indicatorMarginHorizontal" format="dimension" />
+        <attr name="indicatorMarginVertical" format="dimension" />
+
+        <!-- Kích thước mặc định của Icon (dp) -->
+        <attr name="itemIconSize" format="dimension" />
+
+        <!-- Khoảng cách giữa Icon và Text Title (dp) -->
+        <attr name="itemIconTitleSpacing" format="dimension" />
+
+        <!-- Độ nâng/Đổ bóng của thanh Bar (dp) -->
+        <attr name="barElevation" format="dimension" />
+    </declare-styleable>
 </resources>

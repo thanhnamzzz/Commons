@@ -223,6 +223,10 @@ class MainActivity : SimpleActivity<ActivityMainBinding>(ActivityMainBinding::in
 		binding.btnFingerGestures.setOnClickListener {
 			startActivity(Intent(this, FingerGestureActivity::class.java))
 		}
+
+		binding.btnSingleActivity.setOnClickListener {
+			startActivity(Intent(this, SingleActivity::class.java))
+		}
 	}
 
 	private var popupMenu: PopupMenu? = null
